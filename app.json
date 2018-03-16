@@ -1,0 +1,15 @@
+{
+  "pages": [
+    "pages/home/home",
+    "pages/movieDetails/movieDetails",
+    "pages/list/list",
+    "pages/search/search",
+    "pages/me/me",
+    "pages/shootingMovieDetails/shootingMovieDetails"
+  ],
+  "window": {
+    "backgroundTextStyle": "light",
+    "navigationBarBackgroundColor": "#42BD56",
+    "navigationBarTextStyle": "white"
+  }
+}
