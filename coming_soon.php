@@ -121,17 +121,32 @@ if ($result = $mysqli->query($sql)) {
                 }
             };
         }
-        $out[] = (object)[
-            'id' => (int)$obj->id,
-            'title' => $obj->title,
-            'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
-            'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
-            'description' => $obj->description,
-            'director' => $obj->director,
-            'type' => $obj->type,
-            'status' => (int)$obj->released,
-            'roles' => $offlineRoles
-        ];
+        
+        if($obj->posterH==''){
+            $out[] = (object)[
+                'id' => (int)$obj->id,
+                'title' => $obj->title,
+                'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
+                'posterH' => '',
+                'description' => $obj->description,
+                'director' => $obj->director,
+                'type' => $obj->type,
+                'status' => (int)$obj->released,
+                'roles' => $offlineRoles
+            ];
+        }else{
+            $out[] = (object)[
+                'id' => (int)$obj->id,
+                'title' => $obj->title,
+                'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
+                'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
+                'description' => $obj->description,
+                'director' => $obj->director,
+                'type' => $obj->type,
+                'status' => (int)$obj->released,
+                'roles' => $offlineRoles
+            ];
+        }
 
         $offlineRoles=[];
 
