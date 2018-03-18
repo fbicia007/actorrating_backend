@@ -101,6 +101,7 @@
                             <label class="col-sm-2 col-form-label">角色数：</label>
                             <input type="text" id="roleMember" class="col-sm-3" name="roleMember" placeholder="阿拉伯数字角色数" value="">
                             <button type="button" class="btn btn-info col-sm-2" id="addRole" onclick="addRoles()" style="display: none;">添加</button>
+                            <button type="button" class="btn btn-info col-sm-2" id="addRoleActors" onclick="addRoleActor()" style="display: none;">添加</button>
                         </div>
                         <div class="col-sm-9 form-inline" id="rolesForm">
                             <!-- <select id="actor" class="form-control col-sm-3" required>
@@ -132,8 +133,25 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
     <script>
 
+
+        $('#offline').change(function() {
+            $("#rolesForm").empty();
+        })
+        $('#online').change(function() {
+            $("#rolesForm").empty();
+        })
+
+
         $( "#roleMember" ).focus(function() {
-            $( "#addRole" ).show();
+
+            if($('#offline').is(':checked')){
+                $( "#addRoleActors" ).show();
+                $( "#addRole" ).hide();
+            }else{
+                $( "#addRoleActors" ).hide();
+                $( "#addRole" ).show();
+            }
+
         });
 
         function addRoles(){
@@ -151,6 +169,25 @@
             }
 
             $("#addRole").hide();
+        }
+
+        function addRoleActor(){
+
+            var n = document.getElementById("roleMember").value;
+
+            $("#rolesForm").empty();
+
+            for(i=1;i<=n;i++){
+
+                var label = $("<label class=\"col-sm-2 col-form-label\" for=\"role\"></label>").text("角色" + i + ": ");
+                var roleName = $("<input type=\"text\" class=\"form-control col-sm-3\" id=\"role"+i+"\" placeholder='角色名' name='roleName[]' required>");
+                var actorNumber = $("<input type=\"text\" class=\"form-control col-sm-3\" id=\"actorNumber"+i+"\" placeholder='分配演员数' name='actorNumber[]' required>");
+                var roleDescription = $('<textarea class="form-control col-sm-4" id="roleDescription'+i+'" rows="3" name="roleDescription[]" placeholder="角色简介" required></textarea>');
+                $("#rolesForm").append(label,roleName,actorNumber,roleDescription);
+
+            }
+
+            $("#addRoleActors").hide();
         }
     </script>
 </body>

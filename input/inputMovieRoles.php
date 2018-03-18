@@ -19,38 +19,51 @@ $type = $_POST["type"];
 $director = $_POST["director"];
 $roleNames = $_POST["roleName"];
 $roleDescriptions = $_POST["roleDescription"];
+$actorNumbers = $_POST["actorNumber"];
 $today = date("Ymdhis");
 
 #用时间戳重命名文件
 $posterVName= 'v'.$today;
 $posterHName= 'h'.$today;
 
-imgUpload($posterV,'posterV',$posterVName);
-imgUpload($posterH,'posterH',$posterHName);
-
 #文件后缀名
 $v = end(explode(".", $posterV["name"]));
 $h = end(explode(".", $posterH["name"]));
 
+echo $uploadPV = imgUpload($posterV,'posterV',$posterVName);
+echo $uploadPH = imgUpload($posterH,'posterH',$posterHName);
 
+if($uploadPH==1 && $uploadPV==1){
 
-$actorsSql = 'INSERT INTO `movies` (`title`, `posterV`, `posterH`, `description`, `released`, `type`, `director`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
-$stmt = $pdo->prepare($actorsSql);
-$stmt->execute(array($movieTitle,$posterVName.".".$v,$posterHName.".".$h,$movieDescription,$status,$type,$director));
+    $actorsSql = 'INSERT INTO `movies` (`title`, `posterV`, `posterH`, `description`, `released`, `type`, `director`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
+    $stmt = $pdo->prepare($actorsSql);
+    $stmt->execute(array($movieTitle,$posterVName.".".$v,$posterHName.".".$h,$movieDescription,$status,$type,$director));
 #last movie Id
-$movieId = $pdo->lastInsertId();
+    $movieId = $pdo->lastInsertId();
 
-$n = 0;
+    $n = 0;
 
-foreach ($roleNames as $roleName){
-    $roleName;
-    $roleDescription = $roleDescriptions[$n];
+    foreach ($roleNames as $roleName){
+        $roleName;
+        $roleDescription = $roleDescriptions[$n];
+        $actorNumber = $actorNumbers[$n];
 
 
-    $rolesSql = 'INSERT INTO `roles` (`movieId`, `name`, `description`) VALUES (?, ?, ?);';
-    $stmt = $pdo->prepare($rolesSql);
-    $stmt->execute(array($movieId,$roleName,$roleDescription));
+        $rolesSql = 'INSERT INTO `roles` (`movieId`, `name`, `description`, `actorNumber`) VALUES (?, ?, ?,?);';
+        $stmt = $pdo->prepare($rolesSql);
+        $stmt->execute(array($movieId,$roleName,$roleDescription,$actorNumber));
 
-    $n++;
+        $n++;
+    }
+
+    header("Location:actor_role.php?status=".$status."&movieId=".$movieId);
+    exit();
+
+
+}else{
+    echo "upload Error!";
 }
+
+
+
 
