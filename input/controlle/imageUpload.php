@@ -12,16 +12,16 @@ function imgUpload($file,$type,$onlineName){
     {
         case 'posterV':
 
-            $path = 'images/movie/';
+            $path = '../images/movie/';
             break;
 
         case 'posterH':
 
-            $path = 'images/movie/';
+            $path = '../images/movie/';
             break;
 
         case 'actorPic':
-           echo  $path = 'images/actor/';
+             $path = '../images/actor/';
             break;
     }
 

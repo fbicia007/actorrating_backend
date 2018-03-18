@@ -6,7 +6,7 @@
  * Time: 下午3:12
  */
 
-include_once "connect.php";
+include_once "../connect.php";
 
 $roles = $_POST["roles"];
 $movieId = $_POST["movieId"];
@@ -67,5 +67,5 @@ if($status==1){
 
 $pdo = null;
 
-header("Location:admin.php");
+header("Location:../admin.php");
 exit();

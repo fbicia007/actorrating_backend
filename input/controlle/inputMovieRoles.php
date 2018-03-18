@@ -7,8 +7,8 @@
  */
 
 
-include_once "connect.php";
-include_once "functions.php";
+include_once "../connect.php";
+include_once "imageUpload.php";
 
 $movieTitle = $_POST["movieTitle"];
 $movieDescription = $_POST["movieDescription"];
@@ -30,13 +30,13 @@ $posterHName= 'h'.$today;
 $v = end(explode(".", $posterV["name"]));
 $h = end(explode(".", $posterH["name"]));
 
-echo $uploadPV = imgUpload($posterV,'posterV',$posterVName);
-echo $uploadPH = imgUpload($posterH,'posterH',$posterHName);
+$uploadPV = imgUpload($posterV,'posterV',$posterVName);
+$uploadPH = imgUpload($posterH,'posterH',$posterHName);
 
 if($uploadPH==1 && $uploadPV==1){
 
-    $actorsSql = 'INSERT INTO `movies` (`title`, `posterV`, `posterH`, `description`, `released`, `type`, `director`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
-    $stmt = $pdo->prepare($actorsSql);
+    $movieSql = 'INSERT INTO `movies` (`title`, `posterV`, `posterH`, `description`, `released`, `type`, `director`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
+    $stmt = $pdo->prepare($movieSql);
     $stmt->execute(array($movieTitle,$posterVName.".".$v,$posterHName.".".$h,$movieDescription,$status,$type,$director));
 #last movie Id
     $movieId = $pdo->lastInsertId();
@@ -56,7 +56,7 @@ if($uploadPH==1 && $uploadPV==1){
         $n++;
     }
 
-    header("Location:actor_role.php?status=".$status."&movieId=".$movieId);
+    header("Location:../actor_role.php?status=".$status."&movieId=".$movieId);
     exit();
 
 
