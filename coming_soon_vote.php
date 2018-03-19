@@ -6,7 +6,7 @@
  * Time: 上午1:23
  */
 
-include_once "connect.php";
+include_once "pdo_connect.php";
 $host = "https://xuwang.de";
 
 if(isset($_GET['actorId'])&&isset($_GET['openId'])&&isset($_GET['roleId'])){
@@ -15,34 +15,40 @@ if(isset($_GET['actorId'])&&isset($_GET['openId'])&&isset($_GET['roleId'])){
     $actorId = $_GET['actorId'];
     $roleId = $_GET['roleId'];
 
-    $sql = "SELECT * FROM userVote WHERE roleId = '".$roleId."' AND userId = '".$openId."' AND `actorId`='".$actorId."';";
-    $result = $mysqli->query($sql);
+    $sql = "SELECT * FROM userVote WHERE roleId = ? AND userId = ? ;";
+    $stmt = $pdo->prepare($sql);
+    $stmt->execute(array($roleId,$openId));
+    $result = $stmt->fetchAll();
 
-    $row = $result->fetch_array($result);
-
-    if (!mysqli_num_rows($result))
+    if (!$result)
     {
-        $inputVote = "INSERT INTO `userVote` (`userId`, `roleId`, `actorId`) VALUES ('".$openId."', '".$roleId."', '".$actorId."');";
+        $inputVote = "INSERT INTO `userVote` (`userId`, `roleId`, `actorId`) VALUES (?,?,?);";
+        $stmt = $pdo->prepare($inputVote);
 
-        if($mysqli->query($inputVote)){
+        if($stmt->execute(array($openId,$roleId,$actorId))){
 
-            $sumVotes = "UPDATE `roleVotes` SET `vote`=`vote`+1 WHERE `roleId`='".$roleId."' AND `actorId`='".$actorId."'";
+            $sumVotes = "UPDATE `roleVotes` SET `vote`=`vote`+1 WHERE `roleId`=? AND `actorId`=?";
+            $stmt = $pdo->prepare($sumVotes);
 
-            if($mysqli->query($sumVotes)){
+            if($stmt->execute(array($roleId,$actorId))){
 
-                $lastVote = "SELECT `vote` FROM `roleVotes` WHERE `roleId`='".$roleId."' AND `actorId`='".$actorId."'";
+                $lastVote = "SELECT `vote` FROM `roleVotes` WHERE `roleId`=? AND `actorId`=?";
+                $stmt = $pdo->prepare($lastVote);
 
-                if($endVote = $mysqli->query($lastVote)){
+                if($stmt->execute(array($roleId,$actorId))){
 
-                    $value = $endVote->fetch_object();
+                    #这个角色的这个演员总最后得票数
+                    $value = $stmt->fetchAll();
+                    $value = $value[0]['vote'];
 
                     #vote Sum
-                    $sum ="SELECT SUM(`vote`) as total FROM roleVotes WHERE roleId = '".$roleId."';";
+                    $sum ="SELECT SUM(`vote`) as total FROM roleVotes WHERE roleId = ?;";
+                    $stmt = $pdo->prepare($sum);
 
-                    if ($total = $mysqli->query($sum)) {
-                        while($voteSum = $total->fetch_object()){
-                            $voteRoleSum = $voteSum->total;
-                        }
+                    if ($stmt->execute(array($roleId))) {
+
+                        $voteRoleSum = $stmt->fetchAll();
+                        $voteRoleSum = $voteRoleSum[0]['total'];
 
                     }
                     #end vote Sum
@@ -50,7 +56,7 @@ if(isset($_GET['actorId'])&&isset($_GET['openId'])&&isset($_GET['roleId'])){
                     if($voteRoleSum != 0)
                     {
                         $vote[] = (object)[
-                            'vote'=>round($value->vote*100/$voteRoleSum),
+                            'vote'=>round($value*100/$voteRoleSum),
                             'voteSymbol'=> true
                         ];
                     }
@@ -70,60 +76,77 @@ if(isset($_GET['actorId'])&&isset($_GET['openId'])&&isset($_GET['roleId'])){
     }
     else
     {
+        $oldActorId = $result[0]['actorId'];
 
-        $delVote = "DELETE FROM `userVote` WHERE (`userId` = '".$openId."' AND `roleId` = '".$roleId."' AND `actorId` = '".$actorId."');";
+        $delVote = "DELETE FROM `userVote` WHERE (`userId` = ? AND `roleId` = ?);";
+        $stmt = $pdo->prepare($delVote);
+        $stmt->execute(array($openId,$roleId));
 
-        if($mysqli->query($delVote)){
+        if($actorId!=$oldActorId){
 
-            $sumVotes = "UPDATE `roleVotes` SET `vote`=`vote`-1 WHERE `roleId`='".$roleId."' AND `actorId`='".$actorId."'";
+            $inputVote = "INSERT INTO `userVote` (`userId`, `roleId`, `actorId`) VALUES (?,?,?);";
+            $stmt = $pdo->prepare($inputVote);
+            $stmt->execute(array($openId,$roleId,$actorId));
 
-            if($mysqli->query($sumVotes)){
+            $sumVotes = "UPDATE `roleVotes` SET `vote`=`vote`+1 WHERE `roleId`=? AND `actorId`=?";
+            $stmt = $pdo->prepare($sumVotes);
+            $stmt->execute(array($roleId,$actorId));
 
-                $lastVote = "SELECT `vote` FROM `roleVotes` WHERE `roleId`='".$roleId."' AND `actorId`='".$actorId."'";
+            $sumVotes = "UPDATE `roleVotes` SET `vote`=`vote`-1 WHERE `roleId`=? AND `actorId`=?";
+            $stmt = $pdo->prepare($sumVotes);
+            $stmt->execute(array($roleId,$oldActorId));
 
-                if($endVote = $mysqli->query($lastVote)){
+            $symbol = true;
 
-                    $value = $endVote->fetch_object();
+        }else{
 
-                    #vote Sum
-                    $sum ="SELECT SUM(`vote`) as total FROM roleVotes WHERE roleId = '".$roleId."';";
+            $sumVotes = "UPDATE `roleVotes` SET `vote`=`vote`-1 WHERE `roleId`=? AND `actorId`=?";
+            $stmt = $pdo->prepare($sumVotes);
+            $stmt->execute(array($roleId,$oldActorId));
 
-                    if ($total = $mysqli->query($sum)) {
-                        while($voteSum = $total->fetch_object()){
-                            $voteRoleSum = $voteSum->total;
-                        }
+            $symbol = false;
 
-                    }
-                    #end vote Sum
-                    if($voteRoleSum != 0)
-                    {
-                        $vote[] = (object)[
-                            'vote'=>round($value->vote*100/$voteRoleSum),
-                            'voteSymbol'=> false
-                        ];
-                    }
-                    else{
-                        $vote[] = (object)[
-                            'vote'=>0,
-                            'voteSymbol'=> false
-                        ];
-                    }
+        }
 
+        $lastVote = "SELECT `vote` FROM `roleVotes` WHERE `roleId`=? AND `actorId`=?";
 
-                    echo json_encode($vote);
+        if($stmt = $pdo->prepare($lastVote)){
 
+            $stmt->execute(array($roleId,$actorId));
+            $value = $stmt->fetchAll();
+            $value = $value[0][vote];
+
+            #vote Sum
+            $sum ="SELECT SUM(`vote`) as total FROM roleVotes WHERE roleId = ?;";
+            $stmt = $pdo->prepare($sum);
+
+            if ($stmt->execute(array($roleId))) {
+
+                $voteRoleSum = $stmt->fetchAll();
+                $voteRoleSum = $voteRoleSum[0]['total'];
+            }
+            #end vote Sum
+            if($voteRoleSum != 0)
+            {
+                $vote[] = (object)[
+                    'vote'=>round($value*100/$voteRoleSum),
+                    'voteSymbol'=> $symbol
+                ];
+            }
+            else{
+                $vote[] = (object)[
+                    'vote'=>0,
+                    'voteSymbol'=> $symbol
+                ];
                 }
 
-            }
+                echo json_encode($vote);
         }
+
     }
-
-
 
 }
 else {
     echo json_encode(array ());
 }
 
-
-$mysqli->close();
