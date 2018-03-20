@@ -13,9 +13,41 @@
 
 </head>
 <body>
-<div class="container">
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <a class="navbar-brand" href="#">和风清穆-小程序后台管理系统</a>
+        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav mr-auto">
+                <li class="nav-item">
+                    <a class="nav-link" href="index.php">影片列表 <span class="sr-only">(current)</span></a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="alist.php">演员列表</a>
+                </li>
+                <li class="nav-item dropdown active">
+                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                        数据录入
+                    </a>
+                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <a class="dropdown-item active" href="inputActor.php">录入演员</a>
+                        <a class="dropdown-item" href="inputMovie.php">录入影片</a>
+                    </div>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="comment.php">评论管理</a>
+                </li>
+            </ul>
+            <form class="form-inline my-2 my-lg-0">
+                <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+                <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            </form>
+        </div>
+    </nav>
     <!-- Content here -->
-    <div class="container">
+    <div class="container" style="margin-top: 2%;">
         <div class="row">
             <div class="col-12 align-items-center justify-content-center">
                 <h1>录入演员信息</h1>
@@ -79,7 +111,6 @@
         </div>
     </div>
 
-</div>
 
 
 <!-- Optional JavaScript -->
@@ -110,13 +141,13 @@
         if (birthMonth == 6 && birthDay > 30) {value = "Sorry.";}
         if (birthMonth == 7 && birthDay >=23 || birthMonth == 8 && birthDay <=22) {value = "狮子座";}
         if (birthMonth == 7 && birthDay > 31) {value = "Excuse me?";}
-        if (birthMonth == 8 && birthDay >=23 || birthMonth == 9 && birthDay <=22) {value = "室女座";}
+        if (birthMonth == 8 && birthDay >=23 || birthMonth == 9 && birthDay <=22) {value = "处女座";}
         if (birthMonth == 8 && birthDay > 31) {value = "Yeah. Right.";}
         if (birthMonth == 9 && birthDay >=23 || birthMonth == 10 && birthDay <=22) {value = "天秤座";}
         if (birthMonth == 9 && birthDay > 30) {value = "Try Again.";}
         if (birthMonth == 10 && birthDay >=23 || birthMonth == 11 && birthDay <=21) {value = "天蝎座";}
         if (birthMonth == 10 && birthDay > 31) {value = "Forget it!";}
-        if (birthMonth == 11 && birthDay >=22 || birthMonth == 12 && birthDay <=21) {value = "人马座";}
+        if (birthMonth == 11 && birthDay >=22 || birthMonth == 12 && birthDay <=21) {value = "射手座";}
         if (birthMonth == 11 && birthDay > 30) {value = "Invalid Date";}
         if (birthMonth == 12 && birthDay >=22 || birthMonth == 1 && birthDay <=19) {value = "摩羯座";}
         if (birthMonth == 12 && birthDay > 31) {value = "No way!";}
