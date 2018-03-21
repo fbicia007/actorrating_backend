@@ -13,15 +13,21 @@ function imgUpload($file,$type,$onlineName){
         case 'posterV':
 
             $path = '../images/movie/';
+            $width =300;
+            $height = 418;
             break;
 
         case 'posterH':
 
             $path = '../images/movie/';
+            $width =300;
+            $height = 128;
             break;
 
         case 'actorPic':
-             $path = '../images/actor/';
+            $path = '../images/actor/';
+            $width =300;
+            $height = 450;
             break;
     }
 
@@ -60,7 +66,8 @@ function imgUpload($file,$type,$onlineName){
             else
             {
                 // 如果 upload 目录不存在该文件则将文件上传到 upload 目录下
-                move_uploaded_file($file["tmp_name"], $path.$onlineName.".".$extension);
+                imagecropper($file["tmp_name"],$width,$height,$path.$onlineName.".".$extension);
+                //move_uploaded_file($file["tmp_name"], $path.$onlineName.".".$extension);
                 //echo "文件存储在: " . $path.$onlineName.".".$extension;
                 return 1;
             }
@@ -71,4 +78,82 @@ function imgUpload($file,$type,$onlineName){
         //echo "非法的文件格式";
         return 3;
     }
+}
+
+//$source_path string 源图路径
+
+//$target_width integer 目标图宽度
+
+//$target_height integer 目标图高度
+
+//支持图片类型: image/gif, image/jpeg, image/png.
+
+function imagecropper($source_path, $target_width, $target_height, $targetPath)
+{
+    $source_info   = getimagesize($source_path);
+    $source_width  = $source_info[0];
+    $source_height = $source_info[1];
+    $source_mime   = $source_info['mime'];
+    $source_ratio  = $source_height / $source_width;
+    $target_ratio  = $target_height / $target_width;
+
+    // 源图过高
+    if ($source_ratio > $target_ratio)
+    {
+        $cropped_width  = $source_width;
+        $cropped_height = $source_width * $target_ratio;
+        $source_x = 0;
+        $source_y = ($source_height - $cropped_height) / 2;
+    }
+    // 源图过宽
+    elseif ($source_ratio < $target_ratio)
+    {
+        $cropped_width  = $source_height / $target_ratio;
+        $cropped_height = $source_height;
+        $source_x = ($source_width - $cropped_width) / 2;
+        $source_y = 0;
+    }
+    // 源图适中
+    else
+    {
+        $cropped_width  = $source_width;
+        $cropped_height = $source_height;
+        $source_x = 0;
+        $source_y = 0;
+    }
+
+    switch ($source_mime)
+    {
+        case 'image/gif':
+            $source_image = imagecreatefromgif($source_path);
+            break;
+
+        case 'image/jpeg':
+            $source_image = imagecreatefromjpeg($source_path);
+            break;
+
+        case 'image/png':
+            $source_image = imagecreatefrompng($source_path);
+            break;
+
+        default:
+            return false;
+            break;
+    }
+
+    $target_image  = imagecreatetruecolor($target_width, $target_height);
+    $cropped_image = imagecreatetruecolor($cropped_width, $cropped_height);
+
+    // 裁剪
+    imagecopy($cropped_image, $source_image, 0, 0, $source_x, $source_y, $cropped_width, $cropped_height);
+    // 缩放
+    imagecopyresampled($target_image, $cropped_image, 0, 0, 0, 0, $target_width, $target_height, $cropped_width, $cropped_height);
+
+    header('Content-Type: image/jpeg');
+    imagejpeg($target_image,$targetPath);
+    imagedestroy($source_image);
+    imagedestroy($target_image);
+    imagedestroy($cropped_image);
+
+    //return imagedestroy($cropped_image);
 }

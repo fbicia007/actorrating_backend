@@ -149,7 +149,7 @@
 
                     </div>
 
-                    <button class="btn btn-primary" type="submit" name="submit">Submit form</button>
+                    <button class="btn btn-primary" type="submit" name="submit">保存</button>
 
                 </form>
             </div>
