@@ -60,7 +60,7 @@
                         <input type="text" class="form-control" name="roles[]" value="'.$role[name].'" style="display: none;">
                         <input type="text" class="form-control" name="movieId" value="'.$movieId.'" style="display: none;">
                         <div class="col-sm-9">
-                            <select id="actor" class="form-control col-sm-12" name="actors[]" required>
+                            <select id="actors" class="form-control col-sm-12" name="actors[]" required>
                              <option value="">请选择...</option>';
                         foreach ($resultActors as $actor){
                             echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';
@@ -83,7 +83,7 @@
                         #分配演员
                         for($i=0;$i<$actorNumber;$i++){
 
-                            echo'<select id="actor" class="form-control col-sm-12" name="actors'.$role[id].'[]" required>
+                            echo'<select id="actors" class="form-control col-sm-12" name="actors'.$role[id].'[]" required>
                              <option value="">请选择...</option>';
                             foreach ($resultActors as $actor){
                                 echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';

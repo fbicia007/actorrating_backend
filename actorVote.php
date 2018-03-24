@@ -18,7 +18,7 @@ if(isset($_GET["openId"])&&isset($_GET["rating"])&&isset($_GET["comment"])&&isse
     $rating = $_GET['rating'];
     $comment = $_GET['comment'];
 
-    #search is this user hat this actor voted
+    #search is this user hat this actors voted
     $searchSql = "SELECT COUNT(*) AS 'old' FROM `actorVote` WHERE `openId`=? AND `actorId`=? ";
     $stmt = $pdo->prepare($searchSql);
     $stmt->execute(array($openId,$actorId));
@@ -51,7 +51,7 @@ elseif(isset($_GET["openId"])&&isset($_GET["actorId"])&&!isset($_GET["rating"])&
     $openId = $_GET['openId'];
     $actorId = $_GET['actorId'];
 
-    #search is this user hat this actor voted
+    #search is this user hat this actors voted
     $searchSql = "SELECT COUNT(*) AS 'old' FROM `actorVote` WHERE `openId`=? AND `actorId`=? ";
     $stmt = $pdo->prepare($searchSql);
     $stmt->execute(array($openId,$actorId));

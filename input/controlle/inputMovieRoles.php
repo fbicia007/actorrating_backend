@@ -38,7 +38,7 @@ if($uploadPH==1 && $uploadPV==1){
     $movieSql = 'INSERT INTO `movies` (`title`, `posterV`, `posterH`, `description`, `released`, `type`, `director`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
     $stmt = $pdo->prepare($movieSql);
     $stmt->execute(array($movieTitle,$posterVName.".".$v,$posterHName.".".$h,$movieDescription,$status,$type,$director));
-#last movie Id
+#last movies Id
     $movieId = $pdo->lastInsertId();
 
     $n = 0;

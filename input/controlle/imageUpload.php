@@ -12,20 +12,20 @@ function imgUpload($file,$type,$onlineName){
     {
         case 'posterV':
 
-            $path = '../images/movie/';
+            $path = '../../images/movies/';
             $width =300;
             $height = 418;
             break;
 
         case 'posterH':
 
-            $path = '../images/movie/';
+            $path = '../../images/movies/';
             $width =300;
             $height = 128;
             break;
 
         case 'actorPic':
-            $path = '../images/actor/';
+            $path = '../../images/actors/';
             $width =300;
             $height = 450;
             break;

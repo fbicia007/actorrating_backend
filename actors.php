@@ -125,7 +125,7 @@ if ($result) {
 
         }#end vote detail
 
-        #all actor infos
+        #all actors infos
 
         $out[] = (object)[
             'id' => (int)$key['id'],

@@ -9,6 +9,11 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <style>
+        .draggable { width: 300px; height: 450px;  margin: 0; }
+
+    </style>
+
     <title>录入演员</title>
 
 </head>
@@ -57,45 +62,45 @@
         <div class="row">
 
             <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
-            <form class="col-12" enctype="multipart/form-data" action="controlle/inputActors.php" method="POST">
-                <div class="form-group row col-sm-5">
+            <form class="col-8" enctype="multipart/form-data" action="controlle/inputActors.php" method="POST">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="actorName">演员姓名</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="actorName" name="actorName" required>
                     </div>
                 </div>
-                <div class="form-group row col-sm-5">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="birthday">生日</label>
                     <div class="col-sm-9">
                         <input type="date" class="form-control" id="birthday" name="birthday" required>
                     </div>
                 </div>
-                <div class="form-group row col-sm-5">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="constellation">星座</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="constellation" name="constellation" value="" readonly="readonly">
                     </div>
                 </div>
-                <div class="form-group row col-sm-5">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="birthplace">出生地</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="birthplace" name="birthplace" required>
                     </div>
                 </div>
-                <div class="form-group row col-sm-5">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="profession">精通专业</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="profession" name="profession" placeholder="比如演员,导演等，用逗号隔开" required>
                     </div>
                 </div>
-                <div class="form-group row col-sm-5">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="actorDescription">简介：</label>
                     <div class="col-sm-9">
                         <textarea class="form-control" id="actorDescription" name="actorDescription" rows="5"></textarea>
                     </div>
 
                 </div>
-                <div class="form-group row col-sm-5">
+                <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="photo">照片</label>
                     <div class="col-sm-9">
                         <div class="custom-file">
@@ -107,9 +112,21 @@
 
                 <button class="btn btn-primary" type="submit" name="submit">保存</button>
 
+
+
             </form>
+            <div class="form-group col-4">
+                <img alt="Image Previewer" style="height: 450px;" id="previewer" src="images/300x450.png">
+                <div id="draggable" class="draggable" style=" border-style: solid;   position: relative;    left: 0px;    top: 0px;">
+                    <p>照片建议分辨率为300x450，超出部分将被剪裁。</p>
+                </div>
+            </div>
         </div>
     </div>
+
+
+
+
 
 
 
@@ -119,7 +136,14 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 
+
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
+
 <script>
+
+    //birthday to constellation
     function getConstellationByBirthday(strBirthday) {
 
         var value;
@@ -161,8 +185,36 @@
         $('#constellation').val(getConstellationByBirthday($(this).val()));
     });
 
+    //upload image review
+    var filechooser = document.getElementById('photo');
+    var previewer = document.getElementById('previewer');
 
+    filechooser.onchange = function() {
+        var files = this.files;
+        var file = files[0];
+
+        // 接受 jpeg, jpg, png 类型的图片
+        if (!/\/(?:jpeg|jpg|png)/i.test(file.type)) return;
+
+        var reader = new FileReader();
+
+        reader.onload = function() {
+            var result = this.result;
+
+            previewer.src = result;
+
+            // 清空图片上传框的值
+            //filechooser.value = '';
+        };
+
+        reader.readAsDataURL(file);
+    };
+
+    //取景器
+    $(function() {
+
+        $( "#draggable" ).draggable({ containment: "#previewer", scroll: true });
+    });
 </script>
-
 </body>
 </html>

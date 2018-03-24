@@ -29,7 +29,7 @@ if($uploadPhoto==1){
     $actorsSql = 'INSERT INTO `actors` (`name`, `photo`, `description`, `birthday`, `constellation`, `birthplace`, `profession`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
     $stmt = $pdo->prepare($actorsSql);
     $stmt->execute(array($actorName,$today.".".$v,$actorDescription,$birthday,$constellation,$birthplace,$profession));
-#last movie Id
+#last movies Id
     $actorId = $pdo->lastInsertId();
 
 
