@@ -118,12 +118,12 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员：<span style="color: darkturquoise">'.$title.'</span> 吗？
+                            您确定要从列表中删除演员：<span style="color: darkturquoise">'.$title. '</span> 吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <form action="controlle/del.php" method="POST">
-                                <input style="display: none;" name="movieId" value="'.$id.'">
+                            <form action="controller/del.php" method="POST">
+                                <input style="display: none;" name="movieId" value="' .$id.'">
                                 <button type="submit" class="btn btn-danger" name="submit">删除</button>
                             </form>
                           </div>

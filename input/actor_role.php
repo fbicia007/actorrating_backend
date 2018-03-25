@@ -49,7 +49,7 @@
         <div class="row">
 
             <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
-            <form class="col-12" action="controlle/inputRolesActors.php?status=<?php echo $status; ?>" method="POST">
+            <form class="col-12" action="controller/inputRolesActors.php?status=<?php echo $status; ?>" method="POST">
 
                 <?php
                 if($status==1){

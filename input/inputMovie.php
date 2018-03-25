@@ -8,6 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <!-- cropper api -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css'>
+    <link rel="stylesheet" href="css/style.css">
 
     <title>录入影视剧详细信息</title>
 
@@ -58,20 +62,20 @@
             <div class="row">
 
                <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
-                <form class="col-12" enctype="multipart/form-data" action="controlle/inputMovieRoles.php" method="POST">
-                    <div class="form-group row col-sm-5">
+                <form class="col-6" enctype="multipart/form-data" action="controller/inputMovieRoles.php" method="POST">
+                    <div class="form-group row col-sm-12">
                         <label class="col-sm-3 col-form-label" for="movieTitle">影片名称</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="movieTitle" name="movieTitle" required>
                         </div>
                     </div>
-                    <div class="form-group row col-sm-5">
+                    <div class="form-group row col-sm-12">
                         <label class="col-sm-3 col-form-label" for="director">导演</label>
                         <div class="col-sm-9">
                             <input type="text" class="form-control" id="director" name="director" required>
                         </div>
                     </div>
-                    <div class="form-group row col-sm-5">
+                    <div class="form-group row col-sm-12">
                         <label class="col-sm-3 col-form-label" for="type">影片类型</label>
                         <div class="col-sm-9">
                             <select id="type" class="form-control" name="type" required>
@@ -81,7 +85,7 @@
                             </select>
                         </div>
                     </div>
-                    <fieldset class="form-group col-sm-5">
+                    <fieldset class="form-group col-sm-12" style="border:0;">
                         <div class="row">
                             <legend class="col-form-label col-sm-3 pt-0">影片状态</legend>
                             <div class="col-sm-9">
@@ -101,27 +105,29 @@
                         </div>
                     </fieldset>
 
-                    <div class="form-group row col-sm-5">
+                    <div class="form-group row col-sm-12">
                         <label class="col-sm-3 col-form-label" for="movieDescription">简介：</label>
                         <div class="col-sm-9">
                             <textarea class="form-control" id="movieDescription" name="movieDescription" rows="5"></textarea>
                         </div>
 
                     </div>
-                    <div class="form-group row col-sm-5">
+                    <div class="form-group row col-sm-12">
                         <label class="col-sm-3 col-form-label" for="posterV">影片海报</label>
                         <div class="col-sm-9">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="posterV" name="posterV" required>
+                                <input type="text" style="display: none;" id="posterVName" name="posterVName" value="">
                                 <label class="custom-file-label" for="posterV">纵版海报</label>
                             </div>
                         </div>
                     </div>
-                    <div class="form-group row col-sm-5">
+                    <div class="form-group row col-sm-12">
                         <label class="col-sm-3 col-form-label" for="type">影片海报</label>
                         <div class="col-sm-9">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="posterH" name="posterH" required>
+                                <input type="text" style="display: none;" id="posterHName" name="posterHName" value="">
                                 <label class="custom-file-label" for="posterH">横版海报</label>
                             </div>
                         </div>
@@ -129,8 +135,8 @@
                     <div class="form-group">
                         <label class="col-sm-12 col-form-label">添加角色</label>
 
-                        <div class="col-sm-9 form-inline">
-                            <label class="col-sm-2 col-form-label">角色数：</label>
+                        <div class="col-sm-12 form-inline">
+                            <label class="col-sm-2 col-form-label">总数：</label>
                             <input type="text" id="roleMember" class="col-sm-3" name="roleMember" placeholder="阿拉伯数字角色数" value="">
                             <button type="button" class="btn btn-info col-sm-2" id="addRole" onclick="addRoles()" style="display: none;">添加</button>
                             <button type="button" class="btn btn-info col-sm-2" id="addRoleActors" onclick="addRoleActor()" style="display: none;">添加</button>
@@ -152,6 +158,23 @@
                     <button class="btn btn-primary" type="submit" name="submit">保存</button>
 
                 </form>
+
+                <div class="form-group col-3">
+                    <div class="result"></div>
+                    <!-- save btn -->
+                    <button class="btn btn-success save hide">截取</button>
+                </div>
+                <div class="form-group col-3 img-result hide">
+                    <img class="cropped" src="" alt="">
+                </div>
+                <!-- input file -->
+                <div class="form-group col-4">
+                    <div class="options hide">
+
+                    </div>
+                </div>
+
+
             </div>
 
     </div>
@@ -162,6 +185,9 @@
 <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
 <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
+    <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+
     <script>
 
 
@@ -221,5 +247,6 @@
             $("#addRoleActors").hide();
         }
     </script>
+    <script  src="js/cropperPoster.js"></script>
 </body>
 </html>

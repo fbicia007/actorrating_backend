@@ -8,11 +8,10 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
-
-    <style>
-        .draggable { width: 300px; height: 450px;  margin: 0; }
-
-    </style>
+    <!-- cropper api -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/5.0.0/normalize.min.css">
+    <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css'>
+    <link rel="stylesheet" href="css/style.css">
 
     <title>录入演员</title>
 
@@ -62,7 +61,7 @@
         <div class="row">
 
             <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
-            <form class="col-8" enctype="multipart/form-data" action="controlle/inputActors.php" method="POST">
+            <form class="col-6" enctype="multipart/form-data" action="controller/inputActors.php" method="POST">
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="actorName">演员姓名</label>
                     <div class="col-sm-9">
@@ -105,6 +104,7 @@
                     <div class="col-sm-9">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="photo" name="photo" required>
+                            <input type="text" style="display: none;" id="photoName" name="photoName" value="">
                             <label class="custom-file-label" for="photo">照片</label>
                         </div>
                     </div>
@@ -115,106 +115,79 @@
 
 
             </form>
+            <div class="form-group col-3">
+                <div class="result"></div>
+                <!-- save btn -->
+                <button class="btn btn-success save hide">截取</button>
+            </div>
+            <div class="form-group col-3 img-result hide">
+                <img class="cropped" src="" alt="">
+            </div>
+            <!-- input file -->
             <div class="form-group col-4">
-                <img alt="Image Previewer" style="height: 450px;" id="previewer" src="images/300x450.png">
-                <div id="draggable" class="draggable" style=" border-style: solid;   position: relative;    left: 0px;    top: 0px;">
-                    <p>照片建议分辨率为300x450，超出部分将被剪裁。</p>
+                <div class="options hide">
+
                 </div>
             </div>
         </div>
     </div>
 
 
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+    <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
+    <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
 
 
+    <script>
+
+        //birthday to constellation
+        function getConstellationByBirthday(strBirthday) {
+
+            var value;
+            var strBirthdayArr=strBirthday.split("-");
+            var birthMonth = strBirthdayArr[1];
+            var birthDay = strBirthdayArr[2];
+
+            if (birthMonth == 1 && birthDay >=20 || birthMonth == 2 && birthDay <=18) {value = "水瓶座";}
+            if (birthMonth == 1 && birthDay > 31) {value = "Huh?";}
+            if (birthMonth == 2 && birthDay >=19 || birthMonth == 3 && birthDay <=20) {value = "双鱼座";}
+            if (birthMonth == 2 && birthDay > 29) {value = "Say what?";}
+            if (birthMonth == 3 && birthDay >=21 || birthMonth == 4 && birthDay <=19) {value = "白羊座";}
+            if (birthMonth == 3 && birthDay > 31) {value = "OK. Whatever.";}
+            if (birthMonth == 4 && birthDay >=20 || birthMonth == 5 && birthDay <=20) {value = "金牛座";}
+            if (birthMonth == 4 && birthDay > 30) {value = "I'm soooo sorry!";}
+            if (birthMonth == 5 && birthDay >=21 || birthMonth == 6 && birthDay <=21) {value = "双子座";}
+            if (birthMonth == 5 && birthDay > 31) {value = "Umm ... no.";}
+            if (birthMonth == 6 && birthDay >=22 || birthMonth == 7 && birthDay <=22) {value = "巨蟹座";}
+            if (birthMonth == 6 && birthDay > 30) {value = "Sorry.";}
+            if (birthMonth == 7 && birthDay >=23 || birthMonth == 8 && birthDay <=22) {value = "狮子座";}
+            if (birthMonth == 7 && birthDay > 31) {value = "Excuse me?";}
+            if (birthMonth == 8 && birthDay >=23 || birthMonth == 9 && birthDay <=22) {value = "处女座";}
+            if (birthMonth == 8 && birthDay > 31) {value = "Yeah. Right.";}
+            if (birthMonth == 9 && birthDay >=23 || birthMonth == 10 && birthDay <=22) {value = "天秤座";}
+            if (birthMonth == 9 && birthDay > 30) {value = "Try Again.";}
+            if (birthMonth == 10 && birthDay >=23 || birthMonth == 11 && birthDay <=21) {value = "天蝎座";}
+            if (birthMonth == 10 && birthDay > 31) {value = "Forget it!";}
+            if (birthMonth == 11 && birthDay >=22 || birthMonth == 12 && birthDay <=21) {value = "射手座";}
+            if (birthMonth == 11 && birthDay > 30) {value = "Invalid Date";}
+            if (birthMonth == 12 && birthDay >=22 || birthMonth == 1 && birthDay <=19) {value = "摩羯座";}
+            if (birthMonth == 12 && birthDay > 31) {value = "No way!";}
+            return  value;
+
+        }
 
 
+        $('#birthday').bind('input', function() {
 
-<!-- Optional JavaScript -->
-<!-- jQuery first, then Popper.js, then Bootstrap JS -->
-<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+            $('#constellation').val(getConstellationByBirthday($(this).val()));
+        });
 
 
-    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
-
-<script>
-
-    //birthday to constellation
-    function getConstellationByBirthday(strBirthday) {
-
-        var value;
-        var strBirthdayArr=strBirthday.split("-");
-        var birthMonth = strBirthdayArr[1];
-        var birthDay = strBirthdayArr[2];
-
-        if (birthMonth == 1 && birthDay >=20 || birthMonth == 2 && birthDay <=18) {value = "水瓶座";}
-        if (birthMonth == 1 && birthDay > 31) {value = "Huh?";}
-        if (birthMonth == 2 && birthDay >=19 || birthMonth == 3 && birthDay <=20) {value = "双鱼座";}
-        if (birthMonth == 2 && birthDay > 29) {value = "Say what?";}
-        if (birthMonth == 3 && birthDay >=21 || birthMonth == 4 && birthDay <=19) {value = "白羊座";}
-        if (birthMonth == 3 && birthDay > 31) {value = "OK. Whatever.";}
-        if (birthMonth == 4 && birthDay >=20 || birthMonth == 5 && birthDay <=20) {value = "金牛座";}
-        if (birthMonth == 4 && birthDay > 30) {value = "I'm soooo sorry!";}
-        if (birthMonth == 5 && birthDay >=21 || birthMonth == 6 && birthDay <=21) {value = "双子座";}
-        if (birthMonth == 5 && birthDay > 31) {value = "Umm ... no.";}
-        if (birthMonth == 6 && birthDay >=22 || birthMonth == 7 && birthDay <=22) {value = "巨蟹座";}
-        if (birthMonth == 6 && birthDay > 30) {value = "Sorry.";}
-        if (birthMonth == 7 && birthDay >=23 || birthMonth == 8 && birthDay <=22) {value = "狮子座";}
-        if (birthMonth == 7 && birthDay > 31) {value = "Excuse me?";}
-        if (birthMonth == 8 && birthDay >=23 || birthMonth == 9 && birthDay <=22) {value = "处女座";}
-        if (birthMonth == 8 && birthDay > 31) {value = "Yeah. Right.";}
-        if (birthMonth == 9 && birthDay >=23 || birthMonth == 10 && birthDay <=22) {value = "天秤座";}
-        if (birthMonth == 9 && birthDay > 30) {value = "Try Again.";}
-        if (birthMonth == 10 && birthDay >=23 || birthMonth == 11 && birthDay <=21) {value = "天蝎座";}
-        if (birthMonth == 10 && birthDay > 31) {value = "Forget it!";}
-        if (birthMonth == 11 && birthDay >=22 || birthMonth == 12 && birthDay <=21) {value = "射手座";}
-        if (birthMonth == 11 && birthDay > 30) {value = "Invalid Date";}
-        if (birthMonth == 12 && birthDay >=22 || birthMonth == 1 && birthDay <=19) {value = "摩羯座";}
-        if (birthMonth == 12 && birthDay > 31) {value = "No way!";}
-        return  value;
-
-    }
-
-
-    $('#birthday').bind('input', function() {
-
-        $('#constellation').val(getConstellationByBirthday($(this).val()));
-    });
-
-    //upload image review
-    var filechooser = document.getElementById('photo');
-    var previewer = document.getElementById('previewer');
-
-    filechooser.onchange = function() {
-        var files = this.files;
-        var file = files[0];
-
-        // 接受 jpeg, jpg, png 类型的图片
-        if (!/\/(?:jpeg|jpg|png)/i.test(file.type)) return;
-
-        var reader = new FileReader();
-
-        reader.onload = function() {
-            var result = this.result;
-
-            previewer.src = result;
-
-            // 清空图片上传框的值
-            //filechooser.value = '';
-        };
-
-        reader.readAsDataURL(file);
-    };
-
-    //取景器
-    $(function() {
-
-        $( "#draggable" ).draggable({ containment: "#previewer", scroll: true });
-    });
-</script>
+    </script>
+    <script  src="js/cropperActor.js"></script>
 </body>
 </html>
