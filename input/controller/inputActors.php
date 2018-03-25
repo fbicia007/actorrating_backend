@@ -6,7 +6,6 @@
  * Time: 上午12:06
  */
     include_once "../connect.php";
-    include_once "imageUpload.php";
 
     $actorName = $_POST["actorName"];
     $birthday = $_POST["birthday"];

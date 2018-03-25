@@ -8,12 +8,11 @@
 
 
     include_once "../connect.php";
-    include_once "imageUpload.php";
 
     $movieTitle = $_POST["movieTitle"];
     $movieDescription = $_POST["movieDescription"];
-    echo $posterVName = $_POST['posterVName'];
-    echo $posterHName = $_POST['posterHName'];
+    $posterVName = $_POST['posterVName'];
+    $posterHName = $_POST['posterHName'];
     $status = $_POST["status"];
     $type = $_POST["type"];
     $director = $_POST["director"];
