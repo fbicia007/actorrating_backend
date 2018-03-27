@@ -26,7 +26,7 @@
     if(isset($_GET['forRole'])){
         return $actorId;
     }else{
-        header("Location:../admin.php");
+        header("Location:../alist.php");
         exit();
     }
 

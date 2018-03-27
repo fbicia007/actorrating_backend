@@ -67,5 +67,5 @@ if($status==1){
 
 $pdo = null;
 
-header("Location:../admin.php");
+header("Location:../index.php");
 exit();
