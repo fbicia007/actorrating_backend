@@ -118,7 +118,7 @@ if ($result) {
                     'avatarUrl'=>json_decode($userInfo)->avatarUrl,
                     'comment'=>$comment,
                     'rating'=>(int)$vote,
-                    'time'=>$dateTime,
+                    'time'=>date("Y-m-d H:i",$dateTime)
                 ];
 
             }
