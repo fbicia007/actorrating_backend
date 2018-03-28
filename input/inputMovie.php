@@ -90,13 +90,13 @@
                             <legend class="col-form-label col-sm-3 pt-0">影片状态</legend>
                             <div class="col-sm-9">
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="online" value="1" checked>
+                                    <input class="form-check-input" type="radio" name="status" id="online" value="1" required>
                                     <label class="form-check-label">
                                         已上映
                                     </label>
                                 </div>
                                 <div class="form-check">
-                                    <input class="form-check-input" type="radio" name="status" id="offline" value="0">
+                                    <input class="form-check-input" type="radio" name="status" id="offline" value="0" required>
                                     <label class="form-check-label">
                                         未上映
                                     </label>
