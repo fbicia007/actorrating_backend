@@ -13,24 +13,34 @@
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css'>
     <link rel="stylesheet" href="css/style.css">
     <?php
-    include_once "connect.php";
 
+    $host = $_SERVER['HTTP_HOST'];
     $movieId = $_GET["movieId"];
-    $movieSql = "SELECT * FROM `movies` WHERE id = ?";
-    $stmt = $pdo->prepare($movieSql);
-    $stmt->execute(array($movieId));
-    $resultMovie = $stmt->fetchAll();
-
-    foreach ($resultMovie as $movie) {
-        $id = $movie[id];
-        $title = $movie[title];
-        $released = $movie[released];
-        $director = $movie[director];
-        $description = $movie[description];
-        $posterV = $movie[posterV];
-        $posterH = $movie[posterH];
-        $type = $movie[type];
+    $movieStatus = $_GET["status"];
+    switch ($movieStatus){
+        case '已上映':
+            $filename = "http://".$host."/actorrating_backend/in_theaters.php?id=".$movieId;
+            break;
+        case '未上映':
+            $filename = "http://".$host."/actorrating_backend/coming_soon.php?id=".$movieId;
+            break;
     }
+
+    $json_string = file_get_contents($filename);
+
+    $movieContent =  json_decode($json_string);
+    $movie = $movieContent[0];
+var_dump($movie);
+    $movieId = $movie->id;
+    $movieTitle = $movie->title;
+    $movieDirector = $movie->director;
+    $type = $movie->type;
+    $released = $movie->status;
+    $movieDescription = $movie->description;
+    $posterV = $movie->posterV;
+    $posterH = $movie->posterH;
+    $actors = $movie->actors;
+
     ?>
 
     <title>编辑影视剧详细信息</title>
@@ -86,13 +96,13 @@
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="movieTitle">影片名称</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="movieTitle" name="movieTitle" value="<?php echo $title; ?>" required>
+                    <input type="text" class="form-control" id="movieTitle" name="movieTitle" value="<?php echo $movieTitle; ?>" required>
                 </div>
             </div>
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="director">导演</label>
                 <div class="col-sm-9">
-                    <input type="text" class="form-control" id="director" name="director" value="<?php echo $director; ?>" required>
+                    <input type="text" class="form-control" id="director" name="director" value="<?php echo $movieDirector; ?>" required>
                 </div>
             </div>
             <div class="form-group row col-sm-12">
@@ -158,7 +168,7 @@
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="movieDescription">简介：</label>
                 <div class="col-sm-9">
-                    <textarea class="form-control" id="movieDescription" name="movieDescription" rows="5"><?php echo $description; ?></textarea>
+                    <textarea class="form-control" id="movieDescription" name="movieDescription" rows="5"><?php echo $movieDescription; ?></textarea>
                 </div>
 
             </div>
@@ -189,8 +199,23 @@
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-12 col-form-label">添加角色</label>
+                <label class="col-sm-12 col-form-label">角色和演员</label>
+                <?php
+                $i =1;
+                foreach ($actors as $actor){
 
+                    $actorName = $actor->name;
+                    $actorId = $actor->id;
+                    $role = $actor->role;
+
+                    echo '<label class="col-sm-2 col-form-label" for="role">角色'.$i.': </label>';
+                    echo '<input type="text" class="form-control col-sm-3" id="role'.$i.'" name="roleName[]" value="'.$role.'">';
+                    echo '<textarea class="form-control col-sm-7" id="roleDescription'.$i.'" rows="3" name="roleDescription[]"></textarea>';
+
+                    $i++;
+                }
+                ?>
+                <input type="text" id="roleMember" class="col-sm-3" name="roleMember" placeholder="阿拉伯数字角色数" value="">
                 <div class="col-sm-12 form-inline">
                     <label class="col-sm-2 col-form-label">总数：</label>
                     <input type="text" id="roleMember" class="col-sm-3" name="roleMember" placeholder="阿拉伯数字角色数" value="">

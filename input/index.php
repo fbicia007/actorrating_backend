@@ -40,8 +40,8 @@
                 <a class="nav-link" href="comment.php">评论管理</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" method="post" id="search">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
@@ -71,10 +71,38 @@
             <?php
             include_once "connect.php";
 
-            $moviesSql = "SELECT * FROM `movies`";
-            $stmt = $pdo->prepare($moviesSql);
-            $stmt->execute();
+            if($_POST['search']){
+
+                $moviesSql = "SELECT * FROM `movies` WHERE title LIKE ? OR director LIKE ?";
+                $stmt = $pdo->prepare($moviesSql);
+                $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+
+            }else{
+
+                $moviesSql = "SELECT * FROM `movies`";
+                $stmt = $pdo->prepare($moviesSql);
+                $stmt->execute();
+            }
+
             $resultMovies = $stmt->fetchAll();
+
+            #定义翻页
+            $per_page = 10;//define how many results for a page
+            $count = count($resultMovies);
+            $pages = ceil($count / $per_page);
+
+            if (empty($_GET['page'])) {
+                $page = "1";
+            } else {
+                $page = $_GET['page'];
+            }
+            $start = ($page - 1) * $per_page;
+            $pageSql = $moviesSql . " LIMIT $start,$per_page";
+            $stmt = $pdo->prepare($pageSql);
+            $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+            $resultPageActors = $stmt->fetchAll();
+
+            $n = 1;
 
             foreach ($resultMovies as $movie){
                 $id = $movie[id];
@@ -99,7 +127,7 @@
                 <td>'.$director.'</td>
                 <td>'.$status.'</td>
                 <td>
-                    <a class="col-sm-5" href="editor.php?status='.$status.'&movieId='.$id.'">
+                    <a class="col-sm-5" href="./controller/editor.php?status='.$status.'&movieId='.$id.'">
                             <button type="button" class="btn btn-primary">编辑</button>
                         </a>
                         <!-- Button trigger modal -->
@@ -132,6 +160,7 @@
                     </div>
                 </td>
             </tr>';
+                $n++;
             }
 
             ?>
@@ -139,7 +168,14 @@
             </tbody>
         </table>
 
-
+        <?php
+        //Show page links
+        for ($i = 1; $i <= $pages; $i++)
+        {?>
+            <tr id="<?php echo $i;?>"><a href="alist.php?page=<?php echo $i;?>"><?php echo $i;?></a></tr>
+            <?php
+        }
+        ?>
     </div>
 
 </div>

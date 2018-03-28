@@ -40,8 +40,8 @@
                 <a class="nav-link" href="comment.php">评论管理</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" method="post" id="search">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
@@ -52,13 +52,125 @@
     <div class="row">
         <div class="col-12 align-items-center justify-content-center">
             <h1>评论管理</h1>
-            <p class="col-md-auto">请填写电影详细信息，选择演员同时分配角色，如果演员不存在，请自行添加演员资料</p>
         </div>
     </div>
     <div class="row">
 
-        <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
+        <table class="table table-striped">
+            <thead class="thead-light">
+            <tr>
+                <th scope="col">#</th>
+                <th scope="col">演员姓名</th>
+                <th scope="col">照片</th>
+                <th scope="col">被评论内容</th>
+                <th scope="col">评分</th>
+                <th scope="col">编辑/删除</th>
+            </tr>
+            </thead>
+            <tbody>
+            <?php
+            include_once "connect.php";
+            #search
+            if($_POST['search']){
 
+                $actorsSql = "SELECT * FROM `actors` INNER JOIN actorVote ON actors.id = actorVote.actorId WHERE actors.name LIKE ? OR actorVote.comment LIKE ?";
+                $stmt = $pdo->prepare($actorsSql);
+                $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+
+
+            }else{
+
+                $actorsSql = "SELECT * FROM actors INNER JOIN actorVote ON actors.id = actorVote.actorId ORDER BY actors.name DESC";
+                $stmt = $pdo->prepare($actorsSql);
+                $stmt->execute();
+            }
+
+
+            $resultActors = $stmt->fetchAll();
+
+            #定义翻页
+            $per_page = 10;//define how many results for a page
+            $count = count($resultActors);
+            $pages = ceil($count / $per_page);
+
+            if (empty($_GET['page'])) {
+                $page = "1";
+            } else {
+                $page = $_GET['page'];
+            }
+            $start = ($page - 1) * $per_page;
+            $pageSql = $actorsSql . " LIMIT $start,$per_page";
+            $stmt = $pdo->prepare($pageSql);
+            $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+            $resultPageActors = $stmt->fetchAll();
+
+            $n = 1;
+
+            foreach ($resultPageActors as $actor){
+
+                $id = $actor[id];
+                $name = $actor[name];
+                $photo = $actor[photo];
+                $comment = $actor[comment];
+                $vote = $actor[vote];
+                $openId = $actor[openId];
+                $actorId = $actor[actorId];
+
+                echo '<tr>
+                <th scope="row">'.$n.'</th>
+                <td>'.$name.'</td>
+                <td><img style="width: 25px;" src="../images/actors/'.$photo.'"  alt="'.$name.'" /></td>
+                <td>'.$comment.'</td>
+                <td>'.$vote.'</td>
+                <td>
+                    
+                        <!-- Button trigger modal -->
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delActor'.$id.'">
+                      删除
+                    </button>
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="delActor'.$id.'" tabindex="-1" role="dialog" aria-labelledby="actorLabel" aria-hidden="true">
+                      <div class="modal-dialog" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="actorLabel">删除操作确认</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                            您确定要从列表中删除这条评论吗？
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
+                            <form action="controller/del.php" method="POST">
+                                <input style="display: none;" name="openId" value="' .$openId.'">
+                                <input style="display: none;" name="actorId" value="' .$actorId.'">
+                                <button type="submit" class="btn btn-danger">删除</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                </td>
+            </tr>';
+
+                $n++;
+
+            }
+            ?>
+
+            </tbody>
+        </table>
+        <?php
+        //Show page links
+        for ($i = 1; $i <= $pages; $i++)
+        {?>
+            <tr id="<?php echo $i;?>"><a href="alist.php?page=<?php echo $i;?>"><?php echo $i;?></a></tr>
+            <?php
+        }
+        ?>
     </div>
 
 </div>

@@ -40,8 +40,8 @@
                 <a class="nav-link" href="comment.php">评论管理</a>
             </li>
         </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
+        <form class="form-inline my-2 my-lg-0" method="post" id="search">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
         </form>
     </div>
@@ -72,9 +72,20 @@
             <?php
             include_once "connect.php";
 
-            $actorsSql = "SELECT * FROM `actors`";
-            $stmt = $pdo->prepare($actorsSql);
-            $stmt->execute();
+            if($_POST['search']){
+
+                $actorsSql = "SELECT * FROM `actors` WHERE actors.name LIKE ? OR description LIKE ? OR constellation LIKE ? OR birthplace LIKE ? OR profession LIKE ?";
+                $stmt = $pdo->prepare($actorsSql);
+                $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+
+            }else{
+
+                $actorsSql = "SELECT * FROM `actors`";
+                $stmt = $pdo->prepare($actorsSql);
+                $stmt->execute();
+            }
+
+
             $resultActors = $stmt->fetchAll();
 
             #定义翻页
@@ -90,7 +101,7 @@
             $start = ($page - 1) * $per_page;
             $pageSql = $actorsSql . " LIMIT $start,$per_page";
             $stmt = $pdo->prepare($pageSql);
-            $stmt->execute();
+            $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
             $resultPageActors = $stmt->fetchAll();
 
             $n = 1;
@@ -112,7 +123,7 @@
                 <td>'.$profession.'</td>
                 <td>'.$constellation.'</td>
                 <td>
-                    <a class="col-sm-5" href="editor.php?actorId='.$id.'">
+                    <a class="col-sm-5" href="./controller/editor.php?actorId='.$id.'">
                             <button type="button" class="btn btn-primary">编辑</button>
                         </a>
                         <!-- Button trigger modal -->

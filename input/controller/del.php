@@ -18,7 +18,7 @@ if($_POST['movieId']){
     header("Location:../index.php");
     exit();
 
-}elseif ($_POST['actorId']){
+}elseif ($_POST['actorId']&&!$_POST['openId']){
 
     $actorId = $_POST['actorId'];
 
@@ -26,5 +26,15 @@ if($_POST['movieId']){
     $stmt = $pdo->prepare($delActor);
     $stmt->execute(array($actorId));
     header("Location:../alist.php");
+    exit();
+}elseif ($_POST['actorId']&&$_POST['openId']){
+
+    $actorId = $_POST['actorId'];
+    $openId = $_POST['openId'];
+
+    $delActor = "DELETE FROM `actorVote` WHERE `openId` = ? AND `actorId` = ?;";
+    $stmt = $pdo->prepare($delActor);
+    $stmt->execute(array($openId,$actorId));
+    header("Location:../comment.php");
     exit();
 }
