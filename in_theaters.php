@@ -7,7 +7,7 @@
  */
 
 include_once "connect.php";
-$host = "https://xuwang.de";
+$host = "http://".$_SERVER['HTTP_HOST'];
 
 if(isset($_GET['id'])){
     
@@ -30,7 +30,13 @@ if ($result = $mysqli->query($sql)) {
 
             while($objLikes = $resultLikes->fetch_object()){
 
-                $role = $objLikes->role;
+                $roleId = $objLikes->role;
+                $roleSql = "SELECT * FROM roles WHERE id = ".$roleId.";";
+                $resultRole = $mysqli->query($roleSql);
+                while($objRole = $resultRole->fetch_object()){
+                   $role = $objRole->name;
+                }
+
                 $like = (int)$objLikes->like;
 
                 #user liked or not
@@ -74,7 +80,7 @@ if ($result = $mysqli->query($sql)) {
                     'id' => (int)$obj->id,
                     'title' => $obj->title,
                     'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
-                    'posterH' => '',
+                    'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
                     'description' => $obj->description,
                     'director' => $obj->director,
                     'type' => $obj->type,
