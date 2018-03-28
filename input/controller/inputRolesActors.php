@@ -12,6 +12,11 @@ $roles = $_POST["roles"];
 $movieId = $_POST["movieId"];
 $status = $_GET['status'];
 
+$rolesSql = "SELECT * FROM `roles` WHERE `movieId`=?  ";
+$stmt = $pdo->prepare($rolesSql);
+$stmt->execute(array($movieId));
+$resultRoles = $stmt->fetchAll();
+
 
 if($status==1){
 
@@ -19,14 +24,15 @@ if($status==1){
 
     $n = 0;
 
-    foreach ($roles as $role){
+    foreach ($resultRoles as $role){
+
 
         $actorId = $actors[$n];
 
         $inputLikeSql = "INSERT INTO `likes` (`movieId`, `actorId`, `like`, `role`) VALUES (?,?,?,?);";
         $stmt = $pdo->prepare($inputLikeSql);
 
-        if($stmt->execute(array($movieId,$actorId,0,$role))){
+        if($stmt->execute(array($movieId,$actorId,0,$role[id]))){
             header("HTTP/1.1 200 OK");
         }
         else{
@@ -37,11 +43,6 @@ if($status==1){
         $n ++;
     }
 }elseif ($status==0){
-
-    $rolesSql = "SELECT * FROM `roles` WHERE `movieId`=?  ";
-    $stmt = $pdo->prepare($rolesSql);
-    $stmt->execute(array($movieId));
-    $resultRoles = $stmt->fetchAll();
 
     foreach ($resultRoles as $role){
 
