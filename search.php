@@ -8,12 +8,28 @@
 
 include_once "connect.php";
 
-$host = "https://xuwang.de";
+$host = $_SERVER['HTTP_HOST'];
 
 if(isset($_GET["srch_text"]))
 {
+
     $search_keyword = $_GET["srch_text"];
-    $search_sql ="SELECT * FROM `movies` WHERE `title` LIKE '%".$search_keyword."%'";
+
+    if(isset($_GET['release'])){
+
+        $release = $_GET['release'];
+        switch ($release){
+            case 0:
+                $search_sql ="SELECT * FROM `movies` WHERE `released` = 0 AND `title` LIKE '%".$search_keyword."%'";
+                break;
+            case 1:
+                $search_sql ="SELECT * FROM `movies` WHERE `released` = 1 AND `title` LIKE '%".$search_keyword."%'";
+                break;
+        }
+    }else{
+        $search_sql ="SELECT * FROM `movies` WHERE `title` LIKE '%".$search_keyword."%'";
+    }
+
     //$search_sql ="SELECT * FROM `movies` WHERE `released` = 1 AND `title` LIKE '%".$search_keyword."%'";
 
     if ($result = $mysqli->query($search_sql)) {
@@ -35,7 +51,7 @@ if(isset($_GET["srch_text"]))
                             $actors[] = (object)[
                                 'id'=>(int)$objActors->id,
                                 'name'=>$objActors->name,
-                                'photo'=>$host.'/actorrating/images/actors/'.$objActors->photo,
+                                'photo'=>'https://'.$host.'/actorrating/images/actors/'.$objActors->photo,
                                 'like'=>$like,
                                 'role'=>$role
                             ];
@@ -49,8 +65,8 @@ if(isset($_GET["srch_text"]))
             $out[] = (object)[
                 'id' => (int)$obj->id,
                 'title' => $obj->title,
-                'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
-                'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
+                'posterV' => 'https://'.$host.'/actorrating/images/movies/'.$obj->posterV,
+                'posterH' => 'https://'.$host.'/actorrating/images/movies/'.$obj->posterH,
                 'description' => $obj->description,
                 'director' => $obj->director,
                 'type' => $obj->type,
