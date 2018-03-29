@@ -41,8 +41,8 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="post" id="search">
-            <input class="form-control mr-sm-2" type="text" name="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="搜索评论内容" aria-label="Search">
+            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
         </form>
     </div>
 </nav>
@@ -64,6 +64,8 @@
                 <th scope="col">照片</th>
                 <th scope="col">被评论内容</th>
                 <th scope="col">评分</th>
+                <th scope="col">评论人</th>
+                <th scope="col">时间</th>
                 <th scope="col">编辑/删除</th>
             </tr>
             </thead>
@@ -113,7 +115,17 @@
                 $photo = $actor[photo];
                 $comment = $actor[comment];
                 $vote = $actor[vote];
+                $timestamp = $actor[timestamp];
                 $openId = $actor[openId];
+
+                $userSql = "SELECT * FROM cSessionInfo WHERE open_id = ?";
+                $stmt = $pdo->prepare($userSql);
+                $stmt->execute(array($openId));
+                $resultUser = $stmt->fetchAll();
+
+                $userObj = json_decode($resultUser[0]['user_info']);
+                $user = $userObj->nickName;
+
                 $actorId = $actor[actorId];
 
                 echo '<tr>
@@ -122,6 +134,8 @@
                 <td><img style="width: 25px;" src="../images/actors/'.$photo.'"  alt="'.$name.'" /></td>
                 <td>'.$comment.'</td>
                 <td>'.$vote.'</td>
+                <td>'.$user.'</td>
+                <td>'.$timestamp.'</td>
                 <td>
                     
                         <!-- Button trigger modal -->
