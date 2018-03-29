@@ -36,7 +36,12 @@
     if(isset($_GET['forRole'])){
         return $actorId;
     }else{
-        header("Location:../alist.php");
+        if($_POST['url']){
+            header("Location:../".$_POST['url']);
+        }else{
+            header("Location:../alist.php");
+        }
+
         exit();
     }
 

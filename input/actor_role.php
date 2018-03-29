@@ -106,7 +106,7 @@
 
 
                 <button class="btn btn-primary" type="submit" name="submit">保存</button>
-                <button class="btn btn-primary" onclick="window.location.href='inputActor.php'" >没有找到演员？这里添加</button>
+                <button class="btn btn-primary" onclick="window.location.href='inputActor.php?actor_role=1&status=<?php echo $status;?>&movieId=<?php echo $movieId;?>'" >没有找到演员？这里添加</button>
 
             </form>
         </div>
