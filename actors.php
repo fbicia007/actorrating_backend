@@ -10,7 +10,7 @@
 //include_once "connect.php";
 include_once "pdo_connect.php";
 
-$host = "https://xuwang.de";
+$host = $_SERVER['HTTP_HOST'];
 
 if(isset($_GET["id"]))
 {
@@ -112,13 +112,12 @@ if ($result) {
                 $vote = $objActorVotes['vote'];
                 $dateTime = $objActorVotes['timestamp'];
 
-
                 $comments[] = (object)[
                     'nickName'=>json_decode($userInfo)->nickName,
                     'avatarUrl'=>json_decode($userInfo)->avatarUrl,
                     'comment'=>$comment,
                     'rating'=>(int)$vote,
-                    'time'=>date("Y-m-d H:i",$dateTime)
+                    'time'=>date("Y-m-d H:i",strtotime($dateTime))
                 ];
 
             }
