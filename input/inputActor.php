@@ -67,25 +67,25 @@
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="birthday">生日</label>
                     <div class="col-sm-9">
-                        <input type="date" class="form-control" id="birthday" name="birthday" required>
+                        <input type="date" class="form-control" id="birthday" name="birthday">
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="constellation">星座</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="constellation" name="constellation" value="" readonly="readonly">
+                        <input type="text" class="form-control" id="constellation" name="constellation" value="" >
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="birthplace">出生地</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="birthplace" name="birthplace" required>
+                        <input type="text" class="form-control" id="birthplace" name="birthplace">
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="profession">精通专业</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="profession" name="profession" placeholder="比如演员,导演等，用逗号隔开" required>
+                        <input type="text" class="form-control" id="profession" name="profession" placeholder="比如演员,导演等，用逗号隔开">
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">
@@ -134,9 +134,10 @@
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.9/umd/popper.min.js" integrity="sha384-ApNbgh9B+Y1QKtv3Rn7W3mgPxhU9K/ScQsAP7hUibX39j7fakFPskvXusvfa0b4Q" crossorigin="anonymous"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
+
     <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
     <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
-
+    <script  src="js/cropperActor.js"></script>
 
     <script>
 
@@ -184,6 +185,6 @@
 
 
     </script>
-    <script  src="js/cropperActor.js"></script>
+
 </body>
 </html>

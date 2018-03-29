@@ -7,13 +7,23 @@
  */
     include_once "../connect.php";
 
-    $actorName = $_POST["actorName"];
-    $birthday = $_POST["birthday"];
-    $constellation = $_POST["constellation"];
-    $birthplace = $_POST["birthplace"];
-    $profession = $_POST["profession"];
-    $actorDescription = $_POST["actorDescription"];
-    $photoName = $_POST['photoName'];
+        $actorName = $_POST["actorName"];
+
+        if(!$_POST["birthday"]){
+            $birthday = NULL;
+        }
+        else
+        {
+            $birthday = $_POST["birthday"];
+        }
+
+        $constellation = $_POST["constellation"];
+        $birthplace = $_POST["birthplace"];
+        $profession = $_POST["profession"];
+        $actorDescription = $_POST["actorDescription"];
+        $photoName = $_POST['photoName'];
+
+
 
 
     $actorsSql = 'INSERT INTO `actors` (`name`, `photo`, `description`, `birthday`, `constellation`, `birthplace`, `profession`) VALUES ( ?, ?, ?, ?, ?, ?, ?);';
