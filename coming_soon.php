@@ -7,7 +7,7 @@
  */
 
 include_once "connect.php";
-$host = "https://xuwang.de";
+$host = 'https://'.$_SERVER['HTTP_HOST'];
 
 if(isset($_GET['id'])){
 

@@ -1,9 +1,10 @@
-
-
 .hide {
     display: none;
 }
 
 img {
     max-width: 100%;
+}
+.top{
+    padding: 2rem 1rem;
 }

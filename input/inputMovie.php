@@ -109,7 +109,7 @@
 
                     </div>
                     <div class="form-group row col-sm-12">
-                        <label class="col-sm-3 col-form-label" for="posterV">影片海报</label>
+                        <label class="col-sm-3 col-form-label" for="posterV">纵版海报</label>
                         <div class="col-sm-9">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="posterV" name="posterV" required>
@@ -119,7 +119,7 @@
                         </div>
                     </div>
                     <div class="form-group row col-sm-12">
-                        <label class="col-sm-3 col-form-label" for="type">影片海报</label>
+                        <label class="col-sm-3 col-form-label" for="type">横版海报</label>
                         <div class="col-sm-9">
                             <div class="custom-file">
                                 <input type="file" class="custom-file-input" id="posterH" name="posterH" required>
@@ -151,7 +151,7 @@
 
                     </div>
 
-                    <button class="btn btn-primary" type="submit" name="submit">保存</button>
+                    <button class="btn btn-primary" type="submit" name="submit" id="saveMovie">保存</button>
 
                 </form>
 
@@ -244,5 +244,21 @@
         }
     </script>
     <script  src="js/cropperPoster.js"></script>
+
+    <script>
+        $(document).ready(function(){
+            //判断用户名是否已经注册了
+            $('#movieTitle').blur(function() {
+                if ($('#movieTitle').val() != '') {
+                    $.post('controller/movieTitleCheck.php', {title : $('#movieTitle').val()}, function(data) {
+                        if (data == 0) {
+                            alert('此电影名称已被占用！请更改！');
+                            $('#movieTitle').val('').css('border-color','red');
+                        }
+                    });
+                }
+            });
+        });
+    </script>
 </body>
 </html>

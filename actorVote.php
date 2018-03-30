@@ -9,7 +9,7 @@
 //include_once "connect.php";
 include_once "pdo_connect.php";
 
-$host = "https://xuwang.de";
+$host = 'https://'.$_SERVER['HTTP_HOST'];
 
 if(isset($_GET["openId"])&&isset($_GET["rating"])&&isset($_GET["comment"])&&isset($_GET["actorId"])){
 

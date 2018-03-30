@@ -15,7 +15,9 @@
     <link rel="stylesheet" href="css/style.css">
 
     <title>录入影视剧详细信息</title>
-
+    <?php
+    $host = 'https://'.$_SERVER['HTTP_HOST'];
+    ?>
 </head>
 <body>
 <nav class="navbar navbar-expand-lg navbar-light bg-light">
@@ -54,9 +56,9 @@
 
 <div class="container">
     <!-- Content here -->
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid top">
         <div class="container">
-            <h1 class="display-4">演员列表</h1>
+            <h2><span class="col-sm-6">演员列表</span><a class="btn btn-success float-right" href="inputActor.php">添加演员</a></h2>
         </div>
     </div>
     <div class="row">
@@ -64,11 +66,10 @@
         <table class="table table-striped">
             <thead class="thead-light">
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">姓名</th>
                 <th scope="col">照片</th>
                 <th scope="col">生日</th>
-                <th scope="col">专精</th>
+                <th scope="col">职业</th>
                 <th scope="col">星座</th>
                 <th scope="col">编辑/删除</th>
             </tr>
@@ -79,9 +80,11 @@
 
             if($_POST['search']){
 
-                $actorsSql = "SELECT * FROM `actors` WHERE actors.name LIKE ? OR description LIKE ? OR constellation LIKE ? OR birthplace LIKE ? OR profession LIKE ?";
+                //$actorsSql = "SELECT * FROM `actors` WHERE actors.name LIKE ? OR description LIKE ? OR constellation LIKE ? OR birthplace LIKE ? OR profession LIKE ?";
+                $actorsSql = "SELECT * FROM `actors` WHERE actors.name LIKE ?";
                 $stmt = $pdo->prepare($actorsSql);
-                $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+                //$stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+                $stmt->execute(array('%'.$_POST['search'].'%'));
 
             }else{
 
@@ -106,10 +109,9 @@
             $start = ($page - 1) * $per_page;
             $pageSql = $actorsSql . " LIMIT $start,$per_page";
             $stmt = $pdo->prepare($pageSql);
-            $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+            //$stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+            $stmt->execute(array('%'.$_POST['search'].'%'));
             $resultPageActors = $stmt->fetchAll();
-
-            $n = 1;
 
             foreach ($resultPageActors as $actor){
 
@@ -123,7 +125,7 @@
                 $description = $actor[description];
 
                 echo '<tr>
-                <th scope="row">'.$n.'</th>
+                
                 <td>'.$name.'</td>
                 <td><img style="width: 25px;" src="../images/actors/'.$photo.'"  alt="'.$name.'" /></td>
                 <td>'.$birthday.'</td>
@@ -189,12 +191,15 @@
                 
                                 </div>
                                 <div class="form-group row col-sm-12">
-                                    <label class="col-sm-3 col-form-label" for="photo">更改照片</label>
-                                    <div class="col-sm-9">
+                                    <label class="col-sm-3 col-form-label" for="photo">现有照片</label>
+                                    <div class="col-sm-3">
+                                        <img src="'.$host.'/actorrating/images/actors/'.$photo.'" style="width: 100px;" />
+                                    </div>
+                                    <div class="col-sm-6">
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="photo'.$id.'" name="photo">
                                             <input type="text" style="display: none;" id="photoName'.$id.'" name="photoName" value="'.$photo.'">
-                                            <label class="custom-file-label" for="photo">照片</label>
+                                            <label class="custom-file-label" for="photo">更改照片</label>
                                         </div>
                                     </div>
                                 </div>
@@ -203,8 +208,8 @@
                             
                           </div>
                           <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
-                            <button type="submit" class="btn btn-primary" form="actorEditorForm'.$id.'">保存</button>
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="f1()">取消</button>
+                            <button type="submit" class="btn btn-primary" id="saveActor" form="actorEditorForm'.$id.'">保存</button>
                             
                           </div>
                         </div>
@@ -237,13 +242,11 @@
                 </td>
             </tr>';
 
-                $n++;
-
             }
             ?>
 
             <!--pic viewer-->
-            <div style="z-index: 9999;">
+            <div class="uploadPic" style="z-index: 9999;">
                 <div class="form-group col-3">
                     <div class="result"></div>
                     <!-- save btn -->
@@ -332,7 +335,9 @@
         });
     }
 
-
+    function f1() {
+        document.querySelector('.uploadPic').setAttribute('style','display:none;');
+    }
 
 </script>
 </body>

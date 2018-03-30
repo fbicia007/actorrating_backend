@@ -7,7 +7,7 @@
  */
 
 include_once "connect.php";
-$host = "http://".$_SERVER['HTTP_HOST'];
+$host = "https://".$_SERVER['HTTP_HOST'];
 
 if(isset($_GET['id'])){
     

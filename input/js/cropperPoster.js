@@ -46,6 +46,7 @@ uploadV.addEventListener('change', function (e) {
             }
         };
         reader.readAsDataURL(e.target.files[0]);
+        $('#saveMovie').prop('disabled', true);
     }
 });
 
@@ -84,6 +85,7 @@ uploadH.addEventListener('change', function (e) {
             }
         };
         reader.readAsDataURL(e.target.files[0]);
+        $('#saveMovie').prop('disabled', true);
     }
 });
 
@@ -115,6 +117,7 @@ save.addEventListener('click', function (e) {
                     break;
 
             }
+            $('#saveMovie').prop('disabled', false);
 
         }
     },'text');

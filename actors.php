@@ -10,7 +10,7 @@
 //include_once "connect.php";
 include_once "pdo_connect.php";
 
-$host = $_SERVER['HTTP_HOST'];
+$host = 'https://'.$_SERVER['HTTP_HOST'];
 
 if(isset($_GET["id"]))
 {
@@ -80,7 +80,7 @@ if ($result) {
             $votes9_10 = $resultVote9_10[0]['NumberOfVotes'];
 
             #average for all votes
-            $avgActorVoteSql = "SELECT AVG(vote) AS averageVote FROM actorVote WHERE actorId = ?";
+            $avgActorVoteSql = "SELECT AVG(vote) AS averageVote FROM actorVote WHERE actorId = ? AND vote NOT LIKE 0";
             $stmt = $pdo->prepare($avgActorVoteSql);
             $stmt->execute(array($actorId));
             $resultAvgActorVotes = $stmt->fetchAll();
@@ -125,13 +125,17 @@ if ($result) {
         }#end vote detail
 
         #all actors infos
-
+        if($key['birthday']==null){
+            $birthday = '';
+        }else{
+            $birthday = $key['birthday'];
+        }
         $out[] = (object)[
             'id' => (int)$key['id'],
             'name' => $key['name'],
             'photo' => $host.'/actorrating/images/actors/'.$key['photo'],
             'description' => $key['description'],
-            'birthday' => $key['birthday'],
+            'birthday' => $birthday,
             'constellation' => $key['constellation'],
             'birthplace' => $key['birthplace'],
             'profession' => $key['profession'],

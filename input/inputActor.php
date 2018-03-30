@@ -93,7 +93,7 @@
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">
-                    <label class="col-sm-3 col-form-label" for="profession">精通专业</label>
+                    <label class="col-sm-3 col-form-label" for="profession">职业</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="profession" name="profession" placeholder="比如演员,导演等，用逗号隔开">
                     </div>
@@ -110,13 +110,13 @@
                     <div class="col-sm-9">
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="photo" name="photo" required>
-                            <input type="text" style="display: none;" id="photoName" name="photoName" value="">
+                            <input type="hidden" style="display: ;" id="photoName" name="photoName" >
                             <label class="custom-file-label" for="photo">照片</label>
                         </div>
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit" name="submit">保存</button>
+                <button class="btn btn-primary" type="submit" id="saveActor" name="submit">保存</button>
 
 
 
@@ -192,6 +192,7 @@
 
             $('#constellation').val(getConstellationByBirthday($(this).val()));
         });
+
 
 
     </script>

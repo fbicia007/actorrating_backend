@@ -42,6 +42,7 @@ upload.addEventListener('change', function (e) {
             }
         };
         reader.readAsDataURL(e.target.files[0]);
+        $('#saveActor').prop('disabled', true);
     }
 });
 
@@ -64,6 +65,7 @@ save.addEventListener('click', function (e) {
         }else{
             alert('图片已保存！');
             photoName.setAttribute('value', ret);
+            $('#saveActor').prop('disabled', false);
         }
     },'text');
 

@@ -14,13 +14,16 @@
     <link rel="stylesheet" href="css/style.css">
     <?php
 
-    $host = $_SERVER['HTTP_HOST'];
+    include_once 'connect.php';
+
+    $host = 'https://'.$_SERVER['HTTP_HOST'];
     $movieId = $_GET["movieId"];
     $movieStatus = $_GET["status"];
 
     switch ($movieStatus){
         case '已上映':
-            $filename = "http://".$host."/actorrating_backend/in_theaters.php?id=".$movieId;
+            $filename = $host."/actorrating/in_theaters.php?id=".$movieId;
+            //$filename = $host."/actorrating_backend/in_theaters.php?id=".$movieId;
             $json_string = file_get_contents($filename);
 
             $movieContent =  json_decode($json_string);
@@ -37,7 +40,8 @@
             $actors = $movie->actors;
             break;
         case '未上映':
-            $filename = "http://".$host."/actorrating_backend/coming_soon.php?id=".$movieId;
+            $filename = $host."/actorrating/coming_soon.php?id=".$movieId;
+            //$filename = $host."/actorrating_backend/coming_soon.php?id=".$movieId;
             $json_string = file_get_contents($filename);
 
             $movieContent =  json_decode($json_string);
@@ -55,9 +59,6 @@
             $roles = $movie->roles;
             break;
     }
-
-
-
     ?>
 
     <title>编辑影视剧详细信息</title>
@@ -158,7 +159,7 @@
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="posterV">纵版影片海报</label>
                 <div class="col-sm-3">
-                    <img src="<?php echo $posterV; ?>" style="width: 100px;" />
+                    <img src="<?php echo $host.'/actorrating/images/movies/'.$posterV; ?>" style="width: 100px;" />
                 </div>
                 <div class="col-sm-6">
                     <div class="custom-file">
@@ -171,7 +172,7 @@
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="type">横版影片海报</label>
                 <div class="col-sm-3">
-                    <img src="<?php echo $posterH; ?>" style="width: 100px;" />
+                    <img src="<?php echo $host.'/actorrating/images/movies/'.$posterH; ?>" style="width: 100px;" />
                 </div>
                 <div class="col-sm-6">
                     <div class="custom-file">
@@ -247,7 +248,7 @@
             </div>
 
 
-            <button class="btn btn-primary" type="submit" name="submit">保存修已修改信息</button>
+            <button class="btn btn-primary" type="submit" id="saveMovie" name="submit">保存已修改信息</button>
 
         </form>
 
@@ -309,13 +310,13 @@
                     $(wrapper).append('<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">新加角色</span></div>' +
                         '<input type="text" class="form-control" placeholder="此处填写角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>' +
                         '<textarea class="col-sm-5" rows="3" name="roleDescription[]" placeholder="此处填写角色简介"></textarea>' +
-                        '<div class="input-group-append"><button class="btn btn-outline-danger" id="remove_field" type="button">删除</button></div></div>'); //add input box
+                        '<div class="input-group-append"><button class="btn btn-outline-danger remove_field" id="remove_field" type="button">删除</button></div></div>'); //add input box
                 }else {
                     $(wrapper).append('<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">新加角色</span></div>' +
                         '<input type="text" class="form-control" placeholder="此处填写角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>' +
                         '<input type="text" class="form-control" placeholder="分配的演员数" aria-label="分配的演员数" aria-describedby="basic-addon2" name="actorNumbers[]" required>' +
                         '<textarea class="col-sm-5" rows="3" name="roleDescription[]" placeholder="此处填写角色简介"></textarea>' +
-                        '<div class="input-group-append"><button class="btn btn-outline-danger" id="remove_field" type="button">删除</button></div></div>'); //add input box
+                        '<div class="input-group-append"><button class="btn btn-outline-danger remove_field" id="remove_field" type="button">删除</button></div></div>'); //add input box
                 }
 
             }
@@ -324,19 +325,37 @@
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
             e.preventDefault(); $(this).parent('div').parent('div').remove(); x--;
             var roleId = this.id;
-            $.ajax({
-                type: "POST",
-                url: 'controller/del.php?delRole='+roleId,
-                data:{action:'call_this'},
-                success:function(html) {
-                    alert(html);
-                }
+            if(roleId!='remove_field'){
+                $.ajax({
+                    type: "POST",
+                    url: 'controller/del.php?delRole='+roleId,
+                    data:{action:'call_this'},
+                    success:function(html) {
+                        alert(html);
+                    }
 
-            });
+                });
+            }
+            
         })
     });
 
 
+</script>
+<script>
+    $(document).ready(function(){
+        //判断用户名是否已经注册了
+        $('#movieTitle').blur(function() {
+            if ($('#movieTitle').val() != '') {
+                $.post('controller/movieTitleCheck.php?movieId=<?php echo $movieId; ?>', {title : $('#movieTitle').val()}, function(data) {
+                    if (data == 0) {
+                        alert('此电影名称已被占用！请更改！');
+                        $('#movieTitle').val('').css('border-color','red');
+                    }
+                });
+            }
+        });
+    });
 </script>
 </body>
 </html>

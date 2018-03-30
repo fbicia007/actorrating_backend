@@ -7,7 +7,7 @@
  */
 
 include_once "pdo_connect.php";
-$host = "https://xuwang.de";
+$host = 'https://'.$_SERVER['HTTP_HOST'];
 
 if(isset($_GET['actorId'])&&isset($_GET['openId'])&&isset($_GET['roleId'])){
 

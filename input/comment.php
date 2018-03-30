@@ -51,7 +51,7 @@
     <!-- Content here -->
     <div class="row">
         <div class="col-12 align-items-center justify-content-center">
-            <h1>评论管理</h1>
+            <h1>评分管理</h1>
         </div>
     </div>
     <div class="row">
@@ -59,11 +59,10 @@
         <table class="table table-striped">
             <thead class="thead-light">
             <tr>
-                <th scope="col">#</th>
-                <th scope="col">演员姓名</th>
+                <th scope="col">姓名</th>
                 <th scope="col">照片</th>
-                <th scope="col">被评论内容</th>
                 <th scope="col">评分</th>
+                <th scope="col">评论内容</th>
                 <th scope="col">评论人</th>
                 <th scope="col">时间</th>
                 <th scope="col">编辑/删除</th>
@@ -106,7 +105,6 @@
             $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
             $resultPageActors = $stmt->fetchAll();
 
-            $n = 1;
 
             foreach ($resultPageActors as $actor){
 
@@ -115,7 +113,7 @@
                 $photo = $actor[photo];
                 $comment = $actor[comment];
                 $vote = $actor[vote];
-                $timestamp = $actor[timestamp];
+                $timestamp = date("Y-m-d H:i",strtotime($actor[timestamp]));
                 $openId = $actor[openId];
 
                 $userSql = "SELECT * FROM cSessionInfo WHERE open_id = ?";
@@ -129,11 +127,10 @@
                 $actorId = $actor[actorId];
 
                 echo '<tr>
-                <th scope="row">'.$n.'</th>
                 <td>'.$name.'</td>
                 <td><img style="width: 25px;" src="../images/actors/'.$photo.'"  alt="'.$name.'" /></td>
-                <td>'.$comment.'</td>
                 <td>'.$vote.'</td>
+                <td>'.$comment.'</td>              
                 <td>'.$user.'</td>
                 <td>'.$timestamp.'</td>
                 <td>
@@ -169,8 +166,6 @@
                     </div>
                 </td>
             </tr>';
-
-                $n++;
 
             }
             ?>

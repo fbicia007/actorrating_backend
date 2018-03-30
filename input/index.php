@@ -8,6 +8,7 @@
     <!-- Bootstrap CSS -->
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
+    <link href="css/style.css" rel="stylesheet">
 
     <title>录入影视剧详细信息</title>
 
@@ -49,9 +50,9 @@
 
 <div class="container">
     <!-- Content here -->
-    <div class="jumbotron jumbotron-fluid">
+    <div class="jumbotron jumbotron-fluid top">
         <div class="container">
-            <h1 class="display-4">影片列表</h1>
+            <h2><span class="col-sm-6">影片列表</span><a class="btn btn-success float-right" href="inputMovie.php">添加影片</a></h2>
         </div>
     </div>
     <div class="row">
@@ -59,7 +60,6 @@
         <table class="table table-striped">
             <thead class="thead-light">
             <tr>
-                <th scope="col">#</th>
                 <th scope="col">影片名</th>
                 <th scope="col">影片类型</th>
                 <th scope="col">导演</th>
@@ -73,9 +73,11 @@
 
             if($_POST['search']){
 
-                $moviesSql = "SELECT * FROM `movies` WHERE title LIKE ? OR director LIKE ?";
+                //$moviesSql = "SELECT * FROM `movies` WHERE title LIKE ? OR director LIKE ?";
+                $moviesSql = "SELECT * FROM `movies` WHERE title LIKE ?";
                 $stmt = $pdo->prepare($moviesSql);
-                $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+                //$stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+                $stmt->execute(array('%'.$_POST['search'].'%'));
 
             }else{
 
@@ -99,10 +101,11 @@
             $start = ($page - 1) * $per_page;
             $pageSql = $moviesSql . " LIMIT $start,$per_page";
             $stmt = $pdo->prepare($pageSql);
-            $stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+            //$stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
+            $stmt->execute(array('%'.$_POST['search'].'%'));
             $resultPageActors = $stmt->fetchAll();
 
-            $n = 1;
+
 
             foreach ($resultMovies as $movie){
                 $id = $movie[id];
@@ -121,7 +124,6 @@
                 }
 
                 echo '<tr>
-                <th scope="row">'.$id.'</th>
                 <td>'.$title.'</td>
                 <td>'.$type.'</td>
                 <td>'.$director.'</td>
@@ -160,7 +162,7 @@
                     </div>
                 </td>
             </tr>';
-                $n++;
+
             }
 
             ?>

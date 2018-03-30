@@ -8,7 +8,7 @@
 
 include_once "connect.php";
 
-$host = $_SERVER['HTTP_HOST'];
+$host = 'https://'.$_SERVER['HTTP_HOST'];
 
 if(isset($_GET["srch_text"]))
 {
@@ -51,7 +51,7 @@ if(isset($_GET["srch_text"]))
                             $actors[] = (object)[
                                 'id'=>(int)$objActors->id,
                                 'name'=>$objActors->name,
-                                'photo'=>'https://'.$host.'/actorrating/images/actors/'.$objActors->photo,
+                                'photo'=>$host.'/actorrating/images/actors/'.$objActors->photo,
                                 'like'=>$like,
                                 'role'=>$role
                             ];
@@ -65,8 +65,8 @@ if(isset($_GET["srch_text"]))
             $out[] = (object)[
                 'id' => (int)$obj->id,
                 'title' => $obj->title,
-                'posterV' => 'https://'.$host.'/actorrating/images/movies/'.$obj->posterV,
-                'posterH' => 'https://'.$host.'/actorrating/images/movies/'.$obj->posterH,
+                'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
+                'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
                 'description' => $obj->description,
                 'director' => $obj->director,
                 'type' => $obj->type,
