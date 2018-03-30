@@ -43,7 +43,7 @@
         <div class="row">
             <div class="col-12 align-items-center justify-content-center">
                 <h1>角色添加对应演员</h1>
-                <p class="col-md-auto">请给每个角色选择一位演员</p>
+                <p class="col-md-auto">请给每个角色选择演员</p>
             </div>
         </div>
         <div class="row">

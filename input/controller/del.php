@@ -9,17 +9,29 @@
 include_once '../connect.php';
 
 if($_POST['movieId']){
-
+#delete movie
     $movieId = $_POST['movieId'];
 
     $delMovie = "DELETE FROM `movies` WHERE `id` = ?;";
     $stmt = $pdo->prepare($delMovie);
     $stmt->execute(array($movieId));
+
+    $delLikes = "DELETE FROM `likes` WHERE `movieId` = ?;";
+    $stmt = $pdo->prepare($delLikes);
+    $stmt->execute(array($movieId));
+
+    $delRoles = "DELETE FROM `roles` WHERE `movieId` = ?;";
+    $stmt = $pdo->prepare($delRoles);
+    $stmt->execute(array($movieId));
+
+    $userLikes = "DELETE FROM `userLike` WHERE `movieId` = ?;";
+    $stmt = $pdo->prepare($userLikes);
+    $stmt->execute(array($movieId));
     header("Location:../index.php");
     exit();
 
 }elseif ($_POST['actorId']&&!$_POST['openId']){
-
+#delete actor
     $actorId = $_POST['actorId'];
 
     $delActor = "DELETE FROM `actors` WHERE `id` = ?;";
@@ -28,7 +40,7 @@ if($_POST['movieId']){
     header("Location:../alist.php");
     exit();
 }elseif ($_POST['actorId']&&$_POST['openId']){
-
+#delete comment
     $actorId = $_POST['actorId'];
     $openId = $_POST['openId'];
 
@@ -37,4 +49,26 @@ if($_POST['movieId']){
     $stmt->execute(array($openId,$actorId));
     header("Location:../comment.php");
     exit();
+}elseif ($_GET['delRole']){
+    #delete roles
+    $roleId = $_GET['delRole'];
+
+    $delRoles = "DELETE FROM `roles` WHERE `id` = ?;";
+    $stmt = $pdo->prepare($delRoles);
+    $stmt->execute(array($roleId));
+
+    $delRoles = "DELETE FROM `userVote` WHERE `roleId` = ?;";
+    $stmt = $pdo->prepare($delRoles);
+    $stmt->execute(array($roleId));
+
+    $delRoles = "DELETE FROM `roleVotes` WHERE `roleId` = ?;";
+    $stmt = $pdo->prepare($delRoles);
+    $stmt->execute(array($roleId));
+
+    $delRoles = "DELETE FROM `likes` WHERE `role` = ?;";
+    $stmt = $pdo->prepare($delRoles);
+    $stmt->execute(array($roleId));
+
+    echo "已从该影片中删除此觉色！";
+
 }

@@ -17,29 +17,46 @@
     $host = $_SERVER['HTTP_HOST'];
     $movieId = $_GET["movieId"];
     $movieStatus = $_GET["status"];
+
     switch ($movieStatus){
         case '已上映':
             $filename = "http://".$host."/actorrating_backend/in_theaters.php?id=".$movieId;
+            $json_string = file_get_contents($filename);
+
+            $movieContent =  json_decode($json_string);
+            $movie = $movieContent[0];
+
+            $movieId = $movie->id;
+            $movieTitle = $movie->title;
+            $movieDirector = $movie->director;
+            $type = $movie->type;
+            $released = $movie->status;
+            $movieDescription = $movie->description;
+            $posterV = $movie->posterVName;
+            $posterH = $movie->posterHName;
+            $actors = $movie->actors;
             break;
         case '未上映':
             $filename = "http://".$host."/actorrating_backend/coming_soon.php?id=".$movieId;
+            $json_string = file_get_contents($filename);
+
+            $movieContent =  json_decode($json_string);
+            $movie = $movieContent[0];
+
+            $movieId = $movie->id;
+            $movieTitle = $movie->title;
+            $movieDirector = $movie->director;
+            $type = $movie->type;
+            $released = $movie->status;
+            $movieDescription = $movie->description;
+            $posterV = $movie->posterVName;
+            $posterH = $movie->posterHName;
+
+            $roles = $movie->roles;
             break;
     }
 
-    $json_string = file_get_contents($filename);
 
-    $movieContent =  json_decode($json_string);
-    $movie = $movieContent[0];
-var_dump($movie);
-    $movieId = $movie->id;
-    $movieTitle = $movie->title;
-    $movieDirector = $movie->director;
-    $type = $movie->type;
-    $released = $movie->status;
-    $movieDescription = $movie->description;
-    $posterV = $movie->posterV;
-    $posterH = $movie->posterH;
-    $actors = $movie->actors;
 
     ?>
 
@@ -47,52 +64,18 @@ var_dump($movie);
 
 </head>
 <body>
-<nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">和风清穆-小程序后台管理系统</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-        <span class="navbar-toggler-icon"></span>
-    </button>
-
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-        <ul class="navbar-nav mr-auto">
-            <li class="nav-item">
-                <a class="nav-link" href="index.php">影片列表 <span class="sr-only">(current)</span></a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="alist.php">演员列表</a>
-            </li>
-            <li class="nav-item dropdown active">
-                <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                    数据录入
-                </a>
-                <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                    <a class="dropdown-item" href="inputActor.php">录入演员</a>
-                    <a class="dropdown-item active" href="inputMovie.php">录入影片</a>
-                </div>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="comment.php">评论管理</a>
-            </li>
-        </ul>
-        <form class="form-inline my-2 my-lg-0">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search">
-            <button class="btn btn-outline-success my-2 my-sm-0" type="submit">Search</button>
-        </form>
-    </div>
-</nav>
 
 <div class="container" style="margin-top: 2%;">
     <!-- Content here -->
     <div class="row">
         <div class="col-12 align-items-center justify-content-center">
-            <h1>录入影视剧详细信息</h1>
-            <p class="col-md-auto">请填写电影详细信息，选择演员同时分配角色，如果演员不存在，请自行添加演员资料</p>
+            <h1>编辑影片<span style="color: #2196f3;"><?php echo $movieTitle; ?></span>的详细信息</h1>
         </div>
     </div>
     <div class="row">
 
-        <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
-        <form class="col-6" enctype="multipart/form-data" action="controller/inputMovieRoles.php" method="POST">
+        <!--<form class="col-9" enctype="multipart/form-data" action="controller/inputMovieRoles.php" method="POST">-->
+        <form class="col-9" enctype="multipart/form-data" action="controller/editor.php?movieId=<?php echo $movieId; ?>" method="POST">
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="movieTitle">影片名称</label>
                 <div class="col-sm-9">
@@ -175,12 +158,12 @@ var_dump($movie);
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="posterV">纵版影片海报</label>
                 <div class="col-sm-3">
-                    <img src="<?php echo "../images/movies/".$posterV; ?>" style="width: 100px;" />
+                    <img src="<?php echo $posterV; ?>" style="width: 100px;" />
                 </div>
                 <div class="col-sm-6">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="posterV" name="posterV">
-                        <input type="text" style="display: none;" id="posterVName" name="posterVName" value="">
+                        <input type="text" style="display: none;" id="posterVName" name="posterVName" value="<?php echo $posterV; ?>">
                         <label class="custom-file-label" for="posterV">重新上传纵版海报</label>
                     </div>
                 </div>
@@ -188,55 +171,83 @@ var_dump($movie);
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="type">横版影片海报</label>
                 <div class="col-sm-3">
-                    <img src="<?php echo "../images/movies/".$posterH; ?>" style="width: 100px;" />
+                    <img src="<?php echo $posterH; ?>" style="width: 100px;" />
                 </div>
                 <div class="col-sm-6">
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="posterH" name="posterH">
-                        <input type="text" style="display: none;" id="posterHName" name="posterHName" value="">
+                        <input type="text" style="display: none;" id="posterHName" name="posterHName" value="<?php echo $posterH; ?>">
                         <label class="custom-file-label" for="posterH">重新上传横版海报</label>
                     </div>
                 </div>
             </div>
             <div class="form-group">
                 <label class="col-sm-12 col-form-label">角色和演员</label>
-                <?php
-                $i =1;
-                foreach ($actors as $actor){
+                <div id="roles">
 
-                    $actorName = $actor->name;
-                    $actorId = $actor->id;
-                    $role = $actor->role;
 
-                    echo '<label class="col-sm-2 col-form-label" for="role">角色'.$i.': </label>';
-                    echo '<input type="text" class="form-control col-sm-3" id="role'.$i.'" name="roleName[]" value="'.$role.'">';
-                    echo '<textarea class="form-control col-sm-7" id="roleDescription'.$i.'" rows="3" name="roleDescription[]"></textarea>';
+                    <?php
+                    switch ($movieStatus){
+                        case '已上映':
+                            $i =1;
+                            foreach ($actors as $actor){
 
-                    $i++;
-                }
-                ?>
-                <input type="text" id="roleMember" class="col-sm-3" name="roleMember" placeholder="阿拉伯数字角色数" value="">
-                <div class="col-sm-12 form-inline">
-                    <label class="col-sm-2 col-form-label">总数：</label>
-                    <input type="text" id="roleMember" class="col-sm-3" name="roleMember" placeholder="阿拉伯数字角色数" value="">
-                    <button type="button" class="btn btn-info col-sm-2" id="addRole" onclick="addRoles()" style="display: none;">添加</button>
-                    <button type="button" class="btn btn-info col-sm-2" id="addRoleActors" onclick="addRoleActor()" style="display: none;">添加</button>
+                                $role = $actor->role;
+                                $roleId = $actor->roleId;
+                                $roleDescription = $actor->roleDescription;
+
+                                echo'
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">现有角色'.$i.'</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" value="'.$role.'" required>
+                                <input type="text" style="display:none;" name="roleId[]" value="'.$roleId.'">
+                                <textarea class="col-sm-5" rows="3" name="roleDescription[]">'.$roleDescription.'</textarea>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger remove_field" id="'.$roleId.'" type="button">删除</button>
+                                </div>
+                            </div>';
+
+                                $i++;
+                            }
+                            break;
+                        case '未上映':
+                            $i =1;
+                            foreach ($roles as $role){
+
+                                $roleName = $role->name;
+                                $roleId = $role->id;
+                                $roleDescription = $role->description;
+                                $actorNumber = count($role->actors);
+
+                                echo'
+                            <div class="input-group mb-3">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text">现有角色'.$i.'</span>
+                                </div>
+                                <input type="text" class="form-control" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" value="'.$roleName.'" required>
+                                <input type="text" class="form-control" placeholder="分配的演员数" aria-label="分配的演员数" aria-describedby="basic-addon2" name="actorNumbers[]" value="'.$actorNumber.'" required>
+                                <input type="text" style="display:none;" name="roleId[]" value="'.$roleId.'">
+                                <textarea class="col-sm-5" rows="3" name="roleDescription[]">'.$roleDescription.'</textarea>
+                                <div class="input-group-append">
+                                    <button class="btn btn-outline-danger remove_field" id="'.$roleId.'" type="button">删除</button>
+                                </div>
+                            </div>';
+
+                                $i++;
+                            }
+                            break;
+                    }
+
+                    ?>
                 </div>
-                <div class="col-sm-9 form-inline" id="rolesForm">
-                    <!-- <select id="actor" class="form-control col-sm-3" required>
-                         <option value="">请选择...</option>
-                         <option value="1">aaa</option>
-                         <option value="2">bbb</option>
-                         <option value="3">ccc</option>
-                         <option value="4">ddd</option>
-                         <option value="4">武警</option>
-                     </select>
--->
-                </div>
 
+                <button class="btn btn-success" type="button" id="addRole">添加角色</button>
             </div>
 
-            <button class="btn btn-primary" type="submit" name="submit">保存</button>
+
+            <button class="btn btn-primary" type="submit" name="submit">保存修已修改信息</button>
 
         </form>
 
@@ -269,65 +280,63 @@ var_dump($movie);
 <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
 <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
 
+<script  src="js/cropperPoster.js"></script>
+
 <script>
 
+    //初始参数个数
+    $(document).ready(function() {
+        var max_fields      = 100; //maximum input boxes allowed
+        var wrapper         = $("#roles"); //Fields wrapper
+        var add_button      = $("#addRole"); //Add button ID
 
-    $('#offline').change(function() {
-        $("#rolesForm").empty();
-    })
-    $('#online').change(function() {
-        $("#rolesForm").empty();
-    })
+        var x = 1; //initlal text box count
+        $(add_button).click(function(e){ //on add input button click
+            e.preventDefault();
+            if(x < max_fields){ //max input box allowed
+                x++; //text box increment
+                <?php
+                switch ($movieStatus){
+                    case '已上映':
+                        echo "var status = '1';";
+                        break;
+                    case '未上映':
+                        echo "var status = '0';";
+                        break;
+                }
+                ?>
+                if(status==1){
+                    $(wrapper).append('<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">新加角色</span></div>' +
+                        '<input type="text" class="form-control" placeholder="此处填写角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>' +
+                        '<textarea class="col-sm-5" rows="3" name="roleDescription[]" placeholder="此处填写角色简介"></textarea>' +
+                        '<div class="input-group-append"><button class="btn btn-outline-danger" id="remove_field" type="button">删除</button></div></div>'); //add input box
+                }else {
+                    $(wrapper).append('<div class="input-group mb-3"><div class="input-group-prepend"><span class="input-group-text">新加角色</span></div>' +
+                        '<input type="text" class="form-control" placeholder="此处填写角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>' +
+                        '<input type="text" class="form-control" placeholder="分配的演员数" aria-label="分配的演员数" aria-describedby="basic-addon2" name="actorNumbers[]" required>' +
+                        '<textarea class="col-sm-5" rows="3" name="roleDescription[]" placeholder="此处填写角色简介"></textarea>' +
+                        '<div class="input-group-append"><button class="btn btn-outline-danger" id="remove_field" type="button">删除</button></div></div>'); //add input box
+                }
 
+            }
+        });
 
-    $( "#roleMember" ).focus(function() {
+        $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
+            e.preventDefault(); $(this).parent('div').parent('div').remove(); x--;
+            var roleId = this.id;
+            $.ajax({
+                type: "POST",
+                url: 'controller/del.php?delRole='+roleId,
+                data:{action:'call_this'},
+                success:function(html) {
+                    alert(html);
+                }
 
-        if($('#offline').is(':checked')){
-            $( "#addRoleActors" ).show();
-            $( "#addRole" ).hide();
-        }else{
-            $( "#addRoleActors" ).hide();
-            $( "#addRole" ).show();
-        }
-
+            });
+        })
     });
 
-    function addRoles(){
 
-        var n = document.getElementById("roleMember").value;
-        $("#rolesForm").empty();
-
-        for(i=1;i<=n;i++){
-
-            var label = $("<label class=\"col-sm-2 col-form-label\" for=\"role\"></label>").text("角色" + i + ": ");
-            var roleName = $("<input type=\"text\" class=\"form-control col-sm-3\" id=\"role"+i+"\" placeholder='角色名' name='roleName[]' required>");
-            var roleDescription = $('<textarea class="form-control col-sm-7" id="roleDescription'+i+'" rows="3" name="roleDescription[]" placeholder="角色简介" required></textarea>');
-            $("#rolesForm").append(label,roleName,roleDescription);
-
-        }
-
-        $("#addRole").hide();
-    }
-
-    function addRoleActor(){
-
-        var n = document.getElementById("roleMember").value;
-
-        $("#rolesForm").empty();
-
-        for(i=1;i<=n;i++){
-
-            var label = $("<label class=\"col-sm-2 col-form-label\" for=\"role\"></label>").text("角色" + i + ": ");
-            var roleName = $("<input type=\"text\" class=\"form-control col-sm-3\" id=\"role"+i+"\" placeholder='角色名' name='roleName[]' required>");
-            var actorNumber = $("<input type=\"text\" class=\"form-control col-sm-3\" id=\"actorNumber"+i+"\" placeholder='分配演员数' name='actorNumber[]' required>");
-            var roleDescription = $('<textarea class="form-control col-sm-4" id="roleDescription'+i+'" rows="3" name="roleDescription[]" placeholder="角色简介" required></textarea>');
-            $("#rolesForm").append(label,roleName,actorNumber,roleDescription);
-
-        }
-
-        $("#addRoleActors").hide();
-    }
 </script>
-<script  src="js/cropperPoster.js"></script>
 </body>
 </html>

@@ -35,6 +35,8 @@ if ($result = $mysqli->query($sql)) {
                 $resultRole = $mysqli->query($roleSql);
                 while($objRole = $resultRole->fetch_object()){
                    $role = $objRole->name;
+                   $roleId = $objRole->id;
+                   $roleDescription = $objRole->description;
                 }
 
                 $like = (int)$objLikes->like;
@@ -66,6 +68,8 @@ if ($result = $mysqli->query($sql)) {
                             'photo'=>$host.'/actorrating/images/actors/'.$objActors->photo,
                             'like'=>$like,
                             'role'=>$role,
+                            'roleId'=>$roleId,
+                            'roleDescription'=>$roleDescription,
                             'likeSymbol'=>$likeSymbol
                         ];
                     }
@@ -81,6 +85,8 @@ if ($result = $mysqli->query($sql)) {
                     'title' => $obj->title,
                     'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
                     'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
+                    'posterVName' => $obj->posterV,
+                    'posterHName' => $obj->posterH,
                     'description' => $obj->description,
                     'director' => $obj->director,
                     'type' => $obj->type,
@@ -93,6 +99,8 @@ if ($result = $mysqli->query($sql)) {
                     'title' => $obj->title,
                     'posterV' => $host.'/actorrating/images/movies/'.$obj->posterV,
                     'posterH' => $host.'/actorrating/images/movies/'.$obj->posterH,
+                    'posterVName' => $obj->posterV,
+                    'posterHName' => $obj->posterH,
                     'description' => $obj->description,
                     'director' => $obj->director,
                     'type' => $obj->type,

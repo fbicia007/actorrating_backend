@@ -28,17 +28,51 @@ if($status==1){
 
 
         $actorId = $actors[$n];
+        #是否已为此角色分配过演员
+        $roleId =$role[id];
+        $ifActorSql = "SELECT * FROM `likes` WHERE movieId = ? AND role = ?;";
+        $stmt = $pdo->prepare($ifActorSql);
+        $stmt->execute(array($movieId,$roleId));
+        $resultIfActor = $stmt->fetchAll();
+        if(empty($resultIfActor)){
 
-        $inputLikeSql = "INSERT INTO `likes` (`movieId`, `actorId`, `like`, `role`) VALUES (?,?,?,?);";
-        $stmt = $pdo->prepare($inputLikeSql);
+            $inputLikeSql = "INSERT INTO `likes` (`movieId`, `actorId`, `like`, `role`) VALUES (?,?,?,?);";
+            $stmt = $pdo->prepare($inputLikeSql);
+            $do = $stmt->execute(array($movieId,$actorId,0,$roleId));
 
-        if($stmt->execute(array($movieId,$actorId,0,$role[id]))){
-            header("HTTP/1.1 200 OK");
+            if($do){
+                header("HTTP/1.1 200 OK");
+            }
+            else{
+                echo "Error";
+            }
+
+        }else{
+
+            foreach ($resultIfActor as $ifActor){
+
+                if($ifActor[actorId]==$actorId){
+
+                    header("HTTP/1.1 200 OK");
+
+                }else{
+
+                    $inputLikeSql = "UPDATE `likes` SET `actorId`=?, `like`=? WHERE movieId = ? AND role = ?;";
+                    $stmt = $pdo->prepare($inputLikeSql);
+                    $do = $stmt->execute(array($actorId,0,$movieId,$roleId));
+
+                    if($do){
+                        header("HTTP/1.1 200 OK");
+                    }
+                    else{
+                        echo "Error";
+                    }
+
+                }
+
+            }
+
         }
-        else{
-            echo "Error";
-        }
-
 
         $n ++;
     }
