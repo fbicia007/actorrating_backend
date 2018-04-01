@@ -58,16 +58,7 @@
 
             <!-- <form class="col-12"  enctype="multipart/form-data" action="inputMovieRoles.php" method="POST">-->
             <form class="col-6" enctype="multipart/form-data" action="controller/inputActors.php" method="POST">
-                <?php
 
-                if($_GET['status']||$_GET['movieId'])
-                {
-                    $movieId = $_GET["movieId"];
-                    $status = $_GET["status"];
-                    $url = "actor_role.php?status=".$status."&movieId=".$movieId;
-                    echo '<input type="text" style="display: none;" class="form-control" id="url" name="url" value="'.$url.'">';
-                }
-                ?>
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="actorName">演员姓名</label>
                     <div class="col-sm-9">

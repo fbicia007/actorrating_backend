@@ -129,6 +129,7 @@
                 <td>'.$director.'</td>
                 <td>'.$status.'</td>
                 <td>
+                    
                     <a class="col-sm-5" href="movieEditor.php?status='.$status.'&movieId='.$id.'">
                             <button type="button" class="btn btn-primary">编辑</button>
                         </a>
