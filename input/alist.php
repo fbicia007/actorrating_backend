@@ -56,10 +56,18 @@
 
 <div class="container">
     <!-- Content here -->
-    <div class="jumbotron jumbotron-fluid top">
+    <div class="jumbotron row top">
+
         <div class="container">
-            <h2><span class="col-sm-6">演员列表</span><a class="btn btn-success float-right" href="inputActor.php">添加演员</a></h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">演员列表</h5>
+                    <p class="card-text">在此可添加演员，对现有演员进行排序查看，编辑和删除操作。</p>
+                    <a class="btn btn-outline-success" href="inputActor.php">添加演员</a>
+                </div>
+            </div>
         </div>
+
     </div>
     <div class="row">
 
@@ -146,7 +154,7 @@
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="actorLabel">编辑演员:<span style="color: darkturquoise">'.$name.'</span>的详细资料</h5>
+                            <h5 class="modal-title" id="actorLabel">编辑演员:<span style="color: #6c757d;">'.$name.'</span>的详细资料</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -227,7 +235,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员：<span style="color: darkturquoise">'.$name. '</span> 吗？
+                            您确定要从列表中删除演员：<span style="color: #6c757d;">'.$name. '</span> 吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

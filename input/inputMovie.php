@@ -248,16 +248,19 @@
 
 
                 var addRoleActor = $('<div class="input-group mb-12">\n' +
-                    '                                <div class="input-group-prepend">\n' +
-                    '                                    <span class="input-group-text">角色'+x+'</span>\n' +
-                    '                                </div>\n' +
-                    '                                <input type="text" class="form-control" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
-                    '                                <textarea class="col-sm-3" rows="1" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
-                    '                                <select id="actor" class="custom-select" name="actors[]" required>\n' +
-                    '                                   <option value="">请选择演员...</option>\n' +
+                    '                                <div class="form-group col-md-10">\n' +
+                    '                                   <span class="input-group-text col-sm-6">角色'+x+'</span>\n' +
+                    '                                   <input type="text" class="form-control" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
+                    '                                   <textarea class="form-control col-sm-12" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
+                    '                                   <div class="form-group col-sm-12">'+
+                    '                                       <label for="inputAddress2">添加/修改备选演员</label>'+
+                    '                                   </div>'+
+                    '                                   <select id="actor" class="form-control custom-select col-sm-12" name="actors[]" required>\n' +
+                    '                                       <option value="">添加备选演员...</option>\n' +
                     '<?php foreach ($resultActors as $actor){ echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';} ?> \n'+
                     '                                   </select>\n'+
-                    '                                <div class="input-group-append">\n' +
+                    '                                </div>\n' +
+                    '                                <div class="form-group col-md-2">\n' +
                     '                                    <button class="btn btn-outline-danger remove_field" type="button">删除</button>\n' +
                     '                                </div>\n' +
                     '                            </div>');
@@ -285,16 +288,19 @@
             if(n < max_fields){ //max input box allowed
 
 
-                var addRoleActor = $('<div class="input-group mb-3">\n' +
-                    '                                <div class="input-group-prepend">\n' +
-                    '                                    <span class="input-group-text">角色'+n+'</span>\n' +
-                    '                                </div>\n' +
+                var addRoleActor = $('<div class="input-group mb-12">\n' +
+                    '                                <div class="form-group col-md-10">\n' +
+                    '                                    <span class="input-group-text col-sm-6">角色'+n+'</span>\n' +
                     '                                <input type="text" class="form-control" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
-                    '                                <textarea class="col-sm-5" rows="1" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
-                    '                                <div class="input-group-prepend" id="addActors'+n+'">\n' +
-                    '                                </div>\n' +
-                    '                                <div class="input-group-append">\n' +
+                    '                                <textarea class="form-control col-sm-12" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
+                    '<div class="form-group col-sm-12">'+
+                    '<label for="inputAddress2">添加/修改备选演员</label>'+
                     '                                    <button class="btn btn-outline-warning add_actor" id="add_actor" onclick="add_actors('+n+')" type="button">添加演员</button>\n' +
+                    '</div>'+
+                    '                                <div class="col-sm-12" id="addActors'+n+'">\n' +
+                    '                                </div>\n' +
+                    '                                </div>\n' +
+                    '                                <div class="form-group col-md-2">\n' +
                     '                                    <button class="btn btn-outline-danger remove_field" type="button">删除角色</button>\n' +
                     '                                </div>\n' +
                     '                            </div>');
@@ -325,11 +331,11 @@
 
 
                 $(wrapper).append('<div>' +
-                    '<select id="actor" class="custom-select" name="actors'+roleNumber+'[]" required>\n' +
+                    '<select id="actor" class="custom-select col-sm-7" name="actors'+roleNumber+'[]" required>\n' +
                     '                                       <option value="">请选择演员...</option>\n' +
                     '<?php foreach ($resultActors as $actor){ echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';} ?> \n'+
                     '                                   </select>' +
-                    '                                    <button class="btn btn-outline-danger remove_actor" type="button">减少演员</button></div>');
+                    '                                    <button class="btn btn-outline-danger col-sm-4 remove_actor" type="button">减少演员</button></div>');
 
             }
 
@@ -351,7 +357,7 @@
             if ($('#movieTitle').val() != '') {
                 $.post('controller/movieTitleCheck.php', {title : $('#movieTitle').val()}, function(data) {
                     if (data == 0) {
-                        alert('此电影名称已被占用！请更改！');
+                        alert('数据库中已经有此影片，不能重复录入！');
                         $('#movieTitle').val('').css('border-color','red');
                     }
                 });

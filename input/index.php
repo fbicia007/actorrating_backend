@@ -50,10 +50,18 @@
 
 <div class="container">
     <!-- Content here -->
-    <div class="jumbotron jumbotron-fluid top">
+    <div class="jumbotron row top">
+
         <div class="container">
-            <h2><span class="col-sm-6">影片列表</span><a class="btn btn-success float-right" href="inputMovie.php">添加影片</a></h2>
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">影片列表</h5>
+                    <p class="card-text">在此可添加影片，对已有影片进行排序查看，编辑和删除操作。</p>
+                    <a class="btn btn-outline-success" href="inputMovie.php">添加影片</a>
+                </div>
+            </div>
         </div>
+
     </div>
     <div class="row">
 
@@ -149,7 +157,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员：<span style="color: darkturquoise">'.$title. '</span> 吗？
+                            您确定要从列表中删除演员：<span style="color: #6c757d;">'.$title. '</span> 吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

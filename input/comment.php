@@ -49,10 +49,17 @@
 
 <div class="container" style="margin-top: 2%;">
     <!-- Content here -->
-    <div class="row">
-        <div class="col-12 align-items-center justify-content-center">
-            <h1>评分管理</h1>
+    <div class="jumbotron row top">
+
+        <div class="container">
+            <div class="card">
+                <div class="card-body">
+                    <h5 class="card-title">评分管理</h5>
+                    <p class="card-text">在此可浏览演员得分和用户评论，可对评论进行删除操作。</p>
+                </div>
+            </div>
         </div>
+
     </div>
     <div class="row">
 
@@ -65,7 +72,7 @@
                 <th scope="col">评论内容</th>
                 <th scope="col">评论人</th>
                 <th scope="col">时间</th>
-                <th scope="col">编辑/删除</th>
+                <th scope="col">删除</th>
             </tr>
             </thead>
             <tbody>

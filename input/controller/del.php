@@ -71,4 +71,29 @@ if($_POST['movieId']){
 
     echo "已从该影片中删除此觉色！";
 
+}elseif ($_GET['changeStatus']){
+    #change status delet likes Or rolevotes
+    $roleId = $_GET['changeStatus'];
+    $roleIds =json_decode($roleId);
+    foreach ($roleIds as $roleId)
+    {
+        $delRoles = "DELETE FROM `roles` WHERE `id` = ?;";
+        $stmt = $pdo->prepare($delRoles);
+        $stmt->execute(array($roleId));
+
+        $delRoles = "DELETE FROM `userVote` WHERE `roleId` = ?;";
+        $stmt = $pdo->prepare($delRoles);
+        $stmt->execute(array($roleId));
+
+        $delRoles = "DELETE FROM `roleVotes` WHERE `roleId` = ?;";
+        $stmt = $pdo->prepare($delRoles);
+        $stmt->execute(array($roleId));
+
+        $delRoles = "DELETE FROM `likes` WHERE `role` = ?;";
+        $stmt = $pdo->prepare($delRoles);
+        $stmt->execute(array($roleId));
+    }
+
+    echo "已清空角色的扮演者！";
+
 }
