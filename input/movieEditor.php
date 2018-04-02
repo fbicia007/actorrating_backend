@@ -265,7 +265,7 @@
 
                                     $nowActorId = $actors[$a]->id;
 
-                                    echo '<select id="actor" class="selectpicker show-tick form-control col-sm-9 custom-select" name="actors'.$i.'[]" data-live-search="true" required>';
+                                    echo '<div class="col-sm-12"><select id="actor" class="selectpicker show-tick form-control col-sm-8 custom-select" name="actors'.$i.'[]" data-live-search="true" required>';
 
                                     foreach ($resultActors as $actor){
 
@@ -276,7 +276,7 @@
                                         echo '>'.$actor[name].'</option>';
 
                                     }
-                                    echo '</select><button class="btn btn-outline-danger remove_actor col-sm-3" style="margin-bottom: 5px;" type="button" onclick="$(this).parent(\'div\').remove();">移除此演员</button>';
+                                    echo '</select><button class="btn btn-outline-danger remove_actor col-sm-4" style="margin-bottom: 5px;" type="button" onclick="$(this).parent(\'div\').remove();">移除此演员</button></div>';
                                 }
                                 echo '<div class="form-group col-sm-12" id="addActors'.$i.'"></div>';
 
@@ -286,7 +286,7 @@
                                 </div>
                             </div>';
 
-                                $i++;
+                               $i++;
                             }
                             break;
                     }
@@ -365,10 +365,11 @@
             $("div.inputRoleActorInfo").remove();
             $.ajax({
                 type: "POST",
-                url: 'controller/del.php?changeStatus=<?php echo json_encode($roleIdArray);?>',
+                url: 'controller/del.php?status=未上映&movieId=<?php echo $movieId;?>&changeStatus=<?php echo json_encode($roleIdArray);?>',
                 data:{action:'call_this'},
                 success:function(html) {
                     alert(html);
+                    window.location.href="movieEditor.php?status=未上映&movieId=<?php echo $movieId;?>"
                 }
 
             });
@@ -384,10 +385,11 @@
             $("div.inputRoleActorInfo").remove();
             $.ajax({
                 type: "POST",
-                url: 'controller/del.php?changeStatus=<?php echo json_encode($roleIdArray);?>',
+                url: 'controller/del.php?status=1&movieId=<?php echo $movieId;?>&changeStatus=<?php echo json_encode($roleIdArray);?>',
                 data:{action:'call_this'},
                 success:function(html) {
                     alert(html);
+                    window.location.href="movieEditor.php?status=已上映&movieId=<?php echo $movieId;?>"
                 }
 
             });
@@ -403,11 +405,11 @@
         var wrapper         = $("#roles"); //Fields wrapper
         var add_button      = $("#addRole"); //Add button ID
 
-        var x = 1; //initlal text box count
+        var x = <?php echo $i; ?>; //initlal text box count
         $(add_button).click(function(e){ //on add input button click
             e.preventDefault();
             if(x < max_fields){ //max input box allowed
-                x++; //text box increment
+
                 <?php
                 switch ($movieStatus){
                     case '已上映':
@@ -446,8 +448,7 @@
                     $('select').selectpicker("refresh");
                 }
 
-
-
+                x++; //text box increment
             }
         });
 
@@ -485,11 +486,11 @@
 
 
                 $(wrapper).append('<div style="margin-bottom:5px;">' +
-                    '<select id="actor" class="selectpicker show-tick form-control col-sm-8 custom-select" name="actors'+roleNumber+'[]" data-live-search="true" required>\n' +
+                    '<select id="actor" class="selectpicker show-tick form-control col-sm-7 custom-select" name="actors'+roleNumber+'[]" data-live-search="true" required>\n' +
                     '                                       <option value="">请选择演员...</option>\n' +
                     '<?php foreach ($resultActors as $actor){ echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';} ?> \n'+
                     '                                   </select>' +
-                    '                                    <button class="btn btn-outline-danger remove_actor col-sm-3" type="button">移除此演员</button></div>');
+                    '                                    <button class="btn btn-outline-danger remove_actor col-sm-4" type="button">移除此演员</button></div>');
 
                 $('select').selectpicker("refresh");
             }
@@ -502,6 +503,7 @@
             z++; //text box increment
         });
     }
+
 
 </script>
 <script>

@@ -71,10 +71,23 @@ if($_POST['movieId']){
 
     echo "已从该影片中删除此觉色！";
 
-}elseif ($_GET['changeStatus']){
+}elseif ($_GET['movieId']&&$_GET['status']){
     #change status delet likes Or rolevotes
+
+    $status = $_GET['status'];
+    if($status=='未上映'){
+        $status=0;
+    }
+    $movieId = $_GET['movieId'];
+
+    $movieSql = 'UPDATE `movies` SET  `released` = ? WHERE `id` = ?';
+    $stmt = $pdo->prepare($movieSql);
+    $stmt->execute(array($status,$movieId));
+
     $roleId = $_GET['changeStatus'];
     $roleIds =json_decode($roleId);
+
+
     foreach ($roleIds as $roleId)
     {
         $delRoles = "DELETE FROM `roles` WHERE `id` = ?;";
