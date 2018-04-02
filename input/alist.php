@@ -154,7 +154,7 @@
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="actorLabel">编辑演员:<span style="color: #6c757d;">'.$name.'</span>的详细资料</h5>
+                            <h5 class="modal-title" id="actorLabel">编辑演员: '.$name.' 的详细资料</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
@@ -200,8 +200,8 @@
                                 </div>
                                 <div class="form-group row col-sm-12">
                                     <label class="col-sm-3 col-form-label" for="photo">现有照片</label>
-                                    <div class="col-sm-3">
-                                        <img src="'.$host.'/actorrating/images/actors/'.$photo.'" style="width: 100px;" />
+                                    <div class="col-sm-3 img-result'.$id.'">
+                                        <img class="cropped'.$id.'" src="'.$host.'/actorrating/images/actors/'.$photo.'" style="width: 100px;" />
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="custom-file">
@@ -235,7 +235,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员：<span style="color: #6c757d;">'.$name. '</span> 吗？
+                            您确定要从列表中删除演员：'.$name. ' 吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
@@ -260,9 +260,9 @@
                     <!-- save btn -->
                     <button class="btn btn-success save hide">截取</button>
                 </div>
-                <div class="form-group col-3 img-result hide">
+                <!--<div class="form-group col-3 img-result hide">
                     <img class="cropped" src="" alt="">
-                </div>
+                </div>-->
                 <!-- input file -->
                 <div class="form-group col-4">
                     <div class="options hide">

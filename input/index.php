@@ -157,7 +157,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员：<span style="color: #6c757d;">'.$title. '</span> 吗？
+                            您确定要从列表中删除演员： '.$title. '  吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

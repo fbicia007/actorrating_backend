@@ -3,10 +3,10 @@
 function imgViewer(id) {
 
     var result = document.querySelector('.result'),
-        img_result = document.querySelector('.img-result'),
+        img_result = document.querySelector('.img-result'+id),
         options = document.querySelector('.options'),
         save = document.querySelector('.save'),
-        cropped = document.querySelector('.cropped'),
+        cropped = document.querySelector('.cropped'+id),
         upload = document.querySelector('#photo'+id),
         photoName = document.querySelector('#photoName'+id),
         cropper = '';
