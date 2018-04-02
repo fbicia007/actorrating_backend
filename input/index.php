@@ -179,14 +179,46 @@
             </tbody>
         </table>
 
-        <?php
-        //Show page links
-        for ($i = 1; $i <= $pages; $i++)
-        {?>
-            <tr id="<?php echo $i;?>"><a href="alist.php?page=<?php echo $i;?>"><?php echo $i;?></a></tr>
-            <?php
-        }
-        ?>
+        <nav aria-label="Page navigation example">
+            <ul class="pagination">
+                <li class="page-item">
+                    <?php
+                    $akteullePage = $_GET['page'];
+                    if($akteullePage && ($akteullePage!=1)){
+                        $targetPage = $akteullePage-1;
+                        echo '<a class="page-link" href="index.php?page='.$targetPage.'" aria-label="Previous">';
+                    }else{
+                        echo '<a class="page-link" href="#" aria-label="Previous">';
+                    }
+                    ?>
+                    <span aria-hidden="true">&laquo;</span>
+                    <span class="sr-only">Previous</span>
+                    </a>
+                </li>
+                <?php
+                //Show page links
+                for ($i = 1; $i <= $pages; $i++)
+                {?>
+                    <li class="page-item" id="<?php echo $i;?>"><a class="page-link" href="index.php?page=<?php echo $i;?>"><?php echo $i;?></a></li>
+                    <?php
+                }
+                ?>
+                <li class="page-item">
+                    <?php
+
+                    if($akteullePage!=$i-1){
+                        $targetPage = $akteullePage+1;
+                        echo '<a class="page-link" href="index.php?page='.$targetPage.'" aria-label="Next">';
+                    }else{
+                        echo '<a class="page-link" href="#" aria-label="Next">';
+                    }
+                    ?>
+                    <span aria-hidden="true">&raquo;</span>
+                    <span class="sr-only">Next</span>
+                    </a>
+                </li>
+            </ul>
+        </nav>
     </div>
 
 </div>
