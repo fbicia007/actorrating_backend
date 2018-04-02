@@ -14,6 +14,7 @@
     <link rel='stylesheet prefetch' href='https://cdnjs.cloudflare.com/ajax/libs/cropper/2.3.4/cropper.min.css'>
     <link rel="stylesheet" href="css/style.css">
 
+    <link href="css/theme.bootstrap_4.css" rel="stylesheet">
     <title>录入影视剧详细信息</title>
     <?php
     $host = 'https://'.$_SERVER['HTTP_HOST'];
@@ -71,15 +72,15 @@
     </div>
     <div class="row">
 
-        <table class="table table-striped">
+        <table class="table table-striped" id="myTable">
             <thead class="thead-light">
             <tr>
                 <th scope="col">姓名</th>
-                <th scope="col">照片</th>
+                <th scope="col" class="sorter-false filter-false">照片</th>
                 <th scope="col">生日</th>
                 <th scope="col">职业</th>
                 <th scope="col">星座</th>
-                <th scope="col">编辑/删除</th>
+                <th scope="col" class="sorter-false filter-false">编辑/删除</th>
             </tr>
             </thead>
             <tbody>
@@ -332,7 +333,16 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
 <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
+<script src="js/jquery.tablesorter.js"></script>
+<script src="js/jquery.tablesorter.widgets.js"></script>
+<script>
+    $(function() {
+        $("#myTable").tablesorter({
+            //theme : "bootstrap",
 
+        });
+    });
+</script>
 
 <script  src="js/cropperActorEditor.js"></script>
 <script>
