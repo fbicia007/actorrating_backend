@@ -47,7 +47,7 @@ function imgViewer(id) {
                 }
             };
             reader.readAsDataURL(e.target.files[0]);
-            $('#saveActor').prop('disabled', true);
+            $('#saveActor'+id).prop('disabled', true);
         }
     });
 
@@ -70,7 +70,7 @@ function imgViewer(id) {
             }else{
                 alert('图片已保存！');
                 photoName.setAttribute('value', ret);
-                $('#saveActor').prop('disabled', false);
+                $('#saveActor'+id).prop('disabled', false);
             }
         },'text');
 

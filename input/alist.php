@@ -217,7 +217,7 @@
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal" onclick="f1()">取消</button>
-                            <button type="submit" class="btn btn-primary" id="saveActor" form="actorEditorForm'.$id.'">保存</button>
+                            <button type="submit" class="btn btn-primary" id="saveActor'.$id.'" form="actorEditorForm'.$id.'">保存</button>
                             
                           </div>
                         </div>

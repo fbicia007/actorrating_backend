@@ -47,7 +47,7 @@
     </div>
 </nav>
 
-<div class="container" style="margin-top: 2%;">
+<div class="container">
     <!-- Content here -->
     <div class="jumbotron row top">
 

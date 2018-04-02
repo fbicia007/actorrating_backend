@@ -69,9 +69,9 @@ elseif ($_GET['movieId'])
                 $stmt->execute(array($roleName,$roleDescription,1,$roleId));
 
                 $updateLikeSql = 'UPDATE `likes` SET `actorId`=? WHERE movieId =? AND role =?;';
-                $stmt = $pdo->prepare($rolesSql);
+                $stmt = $pdo->prepare($updateLikeSql);
                 $stmt->execute(array($actorId,$movieId,$roleId));
-                echo "<br>";
+
 
             }else{
 
@@ -148,7 +148,7 @@ elseif ($_GET['movieId'])
 
 
             }else{
-                echo "new";
+
                 $rolesSql = 'INSERT INTO `roles` (`movieId`, `name`, `description`, `actorNumber`) VALUES (?, ?, ?,?);';
                 $stmt = $pdo->prepare($rolesSql);
                 $stmt->execute(array($movieId,$roleName,$roleDescription,$actorNumber));
@@ -156,7 +156,7 @@ elseif ($_GET['movieId'])
 
                 foreach ($actors as $actor){
 
-                    echo $actorId = $actor;
+                    $actorId = $actor;
 
                     $inputVotesSql = "INSERT INTO `roleVotes` (`actorId`, `vote`, `roleId`) VALUES (?,?,?);";
                     $stmt = $pdo->prepare($inputVotesSql);
