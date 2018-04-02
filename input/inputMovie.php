@@ -169,6 +169,7 @@
             </div>
 
             <button class="btn btn-primary" type="submit" name="submit" id="saveMovie">保存</button>
+            <a class="btn btn-secondary" href="index.php" name="submit">取消</a>
 
         </form>
 

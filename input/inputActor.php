@@ -108,7 +108,7 @@
                 </div>
 
                 <button class="btn btn-primary" type="submit" id="saveActor" name="submit">保存</button>
-
+                <a class="btn btn-secondary" href="alist.php" name="submit">取消</a>
 
 
             </form>

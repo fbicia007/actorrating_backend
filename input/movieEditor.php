@@ -191,7 +191,8 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-3 col-form-label">角色和演员</label>
-                <button class="btn btn-success col-sm-2" type="button" id="addRole">添加角色</button>
+                <button class="btn btn-info col-sm-2" type="button" id="addRole">添加角色</button>
+                <a class="btn btn-success" href="inputActor.php" target="_blank">添加角色时没有找到演员？这里添加</a>
             </div>
 
             <div class="form-group col-sm-12" id="roles">
@@ -295,6 +296,7 @@
                 </div>
 
             <button class="btn btn-primary" type="submit" id="saveMovie" name="submit">保存已修改信息</button>
+            <a class="btn btn-secondary" href="index.php" name="submit">取消</a>
 
         </form>
 
