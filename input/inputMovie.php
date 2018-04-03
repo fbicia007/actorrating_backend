@@ -88,7 +88,7 @@
                 </div>
             </div>
             <div class="form-group row col-sm-12">
-                <label class="col-sm-3 col-form-label" for="type">影片类型</label>
+                <label class="col-sm-3 col-form-label" for="type">类型</label>
                 <div class="col-sm-9">
                     <select id="type" class="form-control" name="type" required>
                         <option value="">请选择...</option>
@@ -97,9 +97,9 @@
                     </select>
                 </div>
             </div>
-            <fieldset class="form-group col-sm-12" style="border:0;">
+            <div class="form-group col-sm-12" style="border:0;">
                 <div class="row">
-                    <legend class="col-form-label col-sm-3 pt-0">影片状态</legend>
+                    <legend class="col-form-label col-sm-3 pt-0">状态</legend>
                     <div class="col-sm-9">
                         <div class="form-check">
                             <input class="form-check-input" type="radio" name="status" id="online" value="1" required>
@@ -115,7 +115,7 @@
                         </div>
                     </div>
                 </div>
-            </fieldset>
+            </div>
 
             <div class="form-group row col-sm-12">
                 <label class="col-sm-3 col-form-label" for="movieDescription">简介：</label>
@@ -130,7 +130,7 @@
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="posterV" name="posterV" required>
                         <input type="text" style="display: none;" id="posterVName" name="posterVName" value="">
-                        <label class="custom-file-label" for="posterV">纵版海报</label>
+                        <label class="custom-file-label" for="posterV">上传图片</label>
                     </div>
                 </div>
             </div>
@@ -140,12 +140,13 @@
                     <div class="custom-file">
                         <input type="file" class="custom-file-input" id="posterH" name="posterH" required>
                         <input type="text" style="display: none;" id="posterHName" name="posterHName" value="">
-                        <label class="custom-file-label" for="posterH">横版海报</label>
+                        <label class="custom-file-label" for="posterH">上传图片</label>
                     </div>
+                    <footer style="display: block;font-size: 80%;color: #6c757d;">请选择jpg，png，gif格式，小于10M的图片</footer>
                 </div>
             </div>
             <div class="form-group">
-                <label class="col-sm-3 col-form-label">添加角色</label>
+                <label class="col-sm-3 col-form-label" style="margin-top: 10px;">角色和演员</label>
                 <button type="button" class="btn btn-info col-sm-2" id="addRole" style="display: none;">添加角色</button>
                 <button type="button" class="btn btn-info col-sm-2" id="addRoleActors" style="display: none;">添加角色</button>
                 <a class="btn btn-success" href="inputActor.php" id="addNewActor" target="_blank" style="display: none;">添加角色时没有找到演员？这里添加</a>
@@ -183,7 +184,7 @@
                 <div class="form-group col-6">
                     <div class="result"></div>
                     <!-- save btn -->
-                    <button class="btn btn-success align-middle save hide">截取纵版海报</button>
+                    <button class="btn btn-success align-middle save hide">截取纵版海报并保存</button>
                 </div>
 
                 <!-- input file -->
@@ -203,7 +204,7 @@
                 <div class="form-group col-6">
                     <div class="resultH"></div>
                     <!-- save btn -->
-                    <button class="btn btn-success align-middle saveH hide">截取横版海报</button>
+                    <button class="btn btn-success align-middle saveH hide">截取横版海报并保存</button>
                 </div>
                 <!-- input file -->
                 <div class="form-group">
@@ -282,13 +283,14 @@
                 var addRoleActor = $(
                     '<div class="input-group mb-12" style="margin-top:10px;">\n' +
                     '                                <div class="form-group col-md-10">\n' +
-                    '                                   <span class="input-group-text col-sm-4">角色'+x+'</span>\n' +
-                    '                                   <input type="text" class="form-control col-sm-4" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
-                    '                                   <select id="actor" class="selectpicker show-tick form-control custom-select col-sm-4" name="actors[]" data-live-search="true" required>\n' +
+                    '                                   <span class="col-sm-4" style="padding: .375rem .75rem;">角色'+x+'：</span>\n' +
+                    '                                   <input type="text" class="form-control col-sm-8" placeholder="角色名" style="margin-bottom:5px;" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
+                    '                                   <span class="col-sm-4" style="padding: .375rem .75rem;">演员：</span>\n' +
+                    '                                   <select id="actor" class="selectpicker show-tick form-control custom-select col-sm-8" name="actors[]" data-live-search="true" required>\n' +
                     '                                       <option value="">添加备选演员...</option>\n' +
                     '<?php foreach ($resultActors as $actor){ echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';} ?> \n'+
                     '                                   </select>\n'+
-                    '                                   <textarea class="form-control col-sm-12" style="margin-top:10px;" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
+                    '                                   <textarea class="form-control col-sm-12" style="margin-top:10px; display:none;" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
                     '                                </div>\n' +
                     '                                <div class="form-group col-md-2">\n' +
                     '                                    <button class="btn btn-outline-danger remove_field" type="button">删除</button>\n' +
@@ -322,8 +324,8 @@
 
                 var addRoleActor = $('<div class="input-group mb-12" style="margin-top: 10px;">\n' +
                     '                                <div class="form-group col-md-10">\n' +
-                    '                                    <span class="input-group-text col-sm-6">角色'+n+'</span>\n' +
-                    '                                <input type="text" class="form-control" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
+                    '                                    <span class="col-sm-4" style="padding: .375rem .75rem;">角色'+n+':</span>\n' +
+                    '                                <input type="text" class="form-control col-sm-8" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
                     '                                <textarea class="form-control col-sm-12" style="margin-top: 10px;" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
                     '<div class="form-group col-sm-12" style="margin-top: 5px; margin-bottom: 3px;">'+
                     '<label for="inputAddress2">添加/修改备选演员</label>'+

@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
 
+    <link href="css/style.css" rel="stylesheet">
     <link href="css/theme.bootstrap_4.css" rel="stylesheet">
     <title>录入影视剧详细信息</title>
 
@@ -42,7 +43,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="post" id="search">
-            <input class="form-control mr-sm-2" type="text" name="search" placeholder="搜索评论内容" aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="搜索评论" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
         </form>
     </div>
@@ -199,9 +200,22 @@
                 <?php
                 //Show page links
                 for ($i = 1; $i <= $pages; $i++)
-                {?>
-                    <li class="page-item" id="<?php echo $i;?>"><a class="page-link" href="comment.php?page=<?php echo $i;?>"><?php echo $i;?></a></li>
-                    <?php
+                {
+                    if(!$akteullePage){
+                        if($i == 1){
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }else{
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                    }else{
+                        if($i == $akteullePage){
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }else{
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                    }
+
+
                 }
                 ?>
                 <li class="page-item">

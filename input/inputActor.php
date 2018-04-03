@@ -102,7 +102,7 @@
                         <div class="custom-file">
                             <input type="file" class="custom-file-input" id="photo" name="photo" required>
                             <input type="hidden" style="display: ;" id="photoName" name="photoName" >
-                            <label class="custom-file-label" for="photo">照片</label>
+                            <label class="custom-file-label" for="photo">上传图片</label>
                         </div>
                     </div>
                 </div>

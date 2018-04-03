@@ -7,4 +7,9 @@ img {
 }
 .top{
     padding: 2rem 1rem;
+    margin-top: 2rem;
+}
+
+.table tbody tr td{
+    vertical-align: middle;
 }

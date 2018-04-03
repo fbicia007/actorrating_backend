@@ -43,7 +43,7 @@
             </li>
         </ul>
         <form class="form-inline my-2 my-lg-0" method="post" id="search">
-            <input class="form-control mr-sm-2" type="text" name="search" placeholder="关键词搜索影片" aria-label="Search">
+            <input class="form-control mr-sm-2" type="text" name="search" placeholder="搜索影片" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
         </form>
     </div>
@@ -139,13 +139,14 @@
                 <td>'.$status.'</td>
                 <td>
                     
-                    <a class="col-sm-5" href="movieEditor.php?status='.$status.'&movieId='.$id.'">
-                            <button type="button" class="btn btn-primary">编辑</button>
+                    <a class="btn btn-primary" href="movieEditor.php?status='.$status.'&movieId='.$id.'">
+                            编辑
                         </a>
                         <!-- Button trigger modal -->
                     <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delet'.$id.'">
                       删除
                     </button>
+                 
                     
                     <!-- Modal -->
                     <div class="modal fade" id="delet'.$id.'" tabindex="-1" role="dialog" aria-labelledby="deletLabel" aria-hidden="true">
@@ -198,10 +199,23 @@
                 </li>
                 <?php
                 //Show page links
+                //Show page links
                 for ($i = 1; $i <= $pages; $i++)
-                {?>
-                    <li class="page-item" id="<?php echo $i;?>"><a class="page-link" href="index.php?page=<?php echo $i;?>"><?php echo $i;?></a></li>
-                    <?php
+                {
+                    if(!$akteullePage){
+                        if($i == 1){
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }else{
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                    }else{
+                        if($i == $akteullePage){
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }else{
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                    }
+
                 }
                 ?>
                 <li class="page-item">

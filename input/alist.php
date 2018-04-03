@@ -255,7 +255,7 @@
             ?>
 
             <!--pic viewer-->
-            <div class="uploadPic" style="z-index: 9999;">
+            <div class="uploadPic" style="position:absolute; z-index: 9999;">
                 <div class="form-group col-3">
                     <div class="result"></div>
                     <!-- save btn -->
@@ -297,9 +297,21 @@
                 <?php
                 //Show page links
                 for ($i = 1; $i <= $pages; $i++)
-                {?>
-                    <li class="page-item" id="<?php echo $i;?>"><a class="page-link" href="alist.php?page=<?php echo $i;?>"><?php echo $i;?></a></li>
-                    <?php
+                {
+                    if(!$akteullePage){
+                        if($i == 1){
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }else{
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                    }else{
+                        if($i == $akteullePage){
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }else{
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                        }
+                    }
+
                 }
                 ?>
                 <li class="page-item">
