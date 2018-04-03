@@ -64,7 +64,7 @@
         </div>
 
     </div>
-    <div class="row">
+    <div class="row" style="text-align: center;">
 
         <table class="table table-striped tablesorter" id="myTable">
             <thead class="thead-light">
@@ -249,7 +249,7 @@
 <script>
     $(function() {
         $("#myTable").tablesorter({
-            //theme : "bootstrap",
+            theme : "bootstrap",
 
         });
     });
