@@ -10,6 +10,9 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/theme.bootstrap_4.css" rel="stylesheet">
+    <link href="css/theme.dropbox.css" rel="stylesheet">
+    <link href="css/theme.green.css" rel="stylesheet">
+    <link href="css/theme.ice.css" rel="stylesheet">
 
     <title>录入影视剧详细信息</title>
 
@@ -165,6 +168,7 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                             <form action="controller/del.php" method="POST">
                                 <input style="display: none;" name="movieId" value="' .$id.'">
+                                <input style="display: none;" name="pageDel" value="' .$_GET['page'].'">
                                 <button type="submit" class="btn btn-danger" name="submit">删除</button>
                             </form>
                           </div>
@@ -206,13 +210,13 @@
                         if($i == 1){
                             echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
                         }else{
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="index.php?page='.$i.'">'.$i.'</a></li>';
                         }
                     }else{
                         if($i == $akteullePage){
                             echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
                         }else{
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="index.php?page='.$i.'">'.$i.'</a></li>';
                         }
                     }
 
@@ -250,7 +254,7 @@
     $(function() {
         $("#myTable").tablesorter({
             theme : "bootstrap",
-
+            //theme : "green",
         });
     });
 </script>

@@ -278,17 +278,18 @@
         $(add_button).click(function(e){ //on add input button click
             e.preventDefault();
             $('#inputActorx').show();
+
             if(x < max_fields){ //max input box allowed
 
 
 
                 var addRoleActor = $(
-                    '<div class="col-md-12" style="margin-top:10px; margin-bottom:30px;">\n' +
+                    '<div class="col-md-12" style="margin-bottom:30px;">\n' +
                     '                                <div class="form-group jumbotron" style="padding: 1rem 1rem; padding-bottom:75px;">\n' +
-                    '                                   <span class="col-sm-4" style="padding: .375rem .75rem;">角色'+x+'：</span>\n' +
-                    '                                   <input type="text" class="form-control col-sm-8" placeholder="角色名" style="margin-bottom:5px;" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
-                    '                                   <span class="col-sm-4" style="padding: .375rem .75rem;">演员：</span>\n' +
-                    '                                   <select id="actor" class="selectpicker show-tick form-control custom-select col-sm-8" name="actors[]" data-live-search="true" required>\n' +
+                    '                                   <span class="col-sm-3" style="padding: .375rem .75rem;">角色'+x+'：</span>\n' +
+                    '                                   <input type="text" class="form-control col-sm-9" placeholder="角色名" style="margin-bottom:5px;" id="focus'+x+'" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
+                    '                                   <span class="col-sm-3" style="padding: .375rem .75rem;">演员：</span>\n' +
+                    '                                   <select id="actor" class="selectpicker show-tick form-control custom-select col-sm-9" name="actors[]" data-live-search="true" required>\n' +
                     '                                       <option value="">添加备选演员...</option>\n' +
                     '<?php foreach ($resultActors as $actor){ echo '<option value="'.$actor[id].'">'.$actor[name].'</option>';} ?> \n'+
                     '                                   </select>\n'+
@@ -301,10 +302,11 @@
                 $(addRoleActor).appendTo(wrapper);
                 $('select').selectpicker("refresh");
 
-
+                $('#focus'+x).focus();
                 x++; //text box increment
 
             }
+
         });
 
         $(wrapper).on("click",".remove_field", function(e){ //user click on remove text
@@ -324,12 +326,12 @@
             if(n < max_fields){ //max input box allowed
 
 
-                var addRoleActor = $('<div class="col-md-12" style="margin-top: 10px; margin-bottom: 30px;">\n' +
+                var addRoleActor = $('<div class="col-md-12" style="margin-bottom: 30px;">\n' +
                     '                                <div class="form-group jumbotron" style="padding: 1rem 1rem; padding-bottom:72px;">\n' +
-                    '                                    <span class="col-sm-4" style="padding: .375rem .75rem;">角色'+n+':</span>\n' +
-                    '                                <input type="text" class="form-control col-sm-8" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" name="roleName[]" required>\n' +
-                    '                                    <span class="col-sm-4" style="padding: .375rem .75rem;">简介:</span>\n' +
-                    '                                <textarea class="form-control col-sm-8" style="margin-top: 10px;" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
+                    '                                    <span class="col-sm-2" style="padding: .375rem .75rem;">角色'+n+':</span>\n' +
+                    '                                <input type="text" class="form-control col-sm-10" placeholder="角色名" aria-label="角色名" aria-describedby="basic-addon2" id="focus'+n+'" name="roleName[]" required>\n' +
+                    '                                    <span class="col-sm-2" style="padding: .375rem .75rem;">简介:</span>\n' +
+                    '                                <textarea class="form-control col-sm-10" style="margin-top: 10px;" rows="3" name="roleDescription[]" placeholder="角色简介"></textarea>\n' +
                     '<div class="form-group col-sm-12" style="margin-top: 5px; margin-bottom: 3px;">'+
                     '<label for="inputAddress2">添加/修改备选演员</label>'+
                     '                                    <button class="btn btn-outline-warning add_actor" id="add_actor" onclick="add_actors('+n+')" type="button">添加演员</button>\n' +
@@ -342,6 +344,7 @@
                     '                                </div>\n' +
                     '                            </div>');
                 $(wrapper).append(addRoleActor);
+                $('#focus'+n).focus();
                 n++; //text box increment
 
             }

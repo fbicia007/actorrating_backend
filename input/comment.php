@@ -167,6 +167,7 @@
                             <form action="controller/del.php" method="POST">
                                 <input style="display: none;" name="openId" value="' .$openId.'">
                                 <input style="display: none;" name="actorId" value="' .$actorId.'">
+                                <input style="display: none;" name="pageDel" value="' .$_GET['page'].'">
                                 <button type="submit" class="btn btn-danger">删除</button>
                             </form>
                           </div>

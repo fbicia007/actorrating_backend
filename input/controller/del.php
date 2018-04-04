@@ -11,6 +11,7 @@ include_once '../connect.php';
 if($_POST['movieId']){
 #delete movie
     $movieId = $_POST['movieId'];
+    $page = $_POST['pageDel'];
 
     $delMovie = "DELETE FROM `movies` WHERE `id` = ?;";
     $stmt = $pdo->prepare($delMovie);
@@ -27,27 +28,31 @@ if($_POST['movieId']){
     $userLikes = "DELETE FROM `userLike` WHERE `movieId` = ?;";
     $stmt = $pdo->prepare($userLikes);
     $stmt->execute(array($movieId));
-    header("Location:../index.php");
+    header("Location:../index.php?page=".$page);
     exit();
 
 }elseif ($_POST['actorId']&&!$_POST['openId']){
 #delete actor
     $actorId = $_POST['actorId'];
+    $page = $_POST['pageDel'];
 
     $delActor = "DELETE FROM `actors` WHERE `id` = ?;";
     $stmt = $pdo->prepare($delActor);
     $stmt->execute(array($actorId));
-    header("Location:../alist.php");
+    header("Location:../alist.php?page=".$page);
+
     exit();
+
 }elseif ($_POST['actorId']&&$_POST['openId']){
 #delete comment
     $actorId = $_POST['actorId'];
     $openId = $_POST['openId'];
+    $page = $_POST['pageDel'];
 
     $delActor = "DELETE FROM `actorVote` WHERE `openId` = ? AND `actorId` = ?;";
     $stmt = $pdo->prepare($delActor);
     $stmt->execute(array($openId,$actorId));
-    header("Location:../comment.php");
+    header("Location:../comment.php?page=".$page);
     exit();
 }elseif ($_GET['delRole']){
     #delete roles

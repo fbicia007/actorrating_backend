@@ -242,8 +242,10 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                             <form action="controller/del.php" method="POST">
                                 <input style="display: none;" name="actorId" value="' .$id.'">
+                                <input style="display: none;" name="pageDel" value="' .$_GET['page'].'">
                                 <button type="submit" class="btn btn-danger">删除</button>
                             </form>
+                            
                           </div>
                         </div>
                       </div>
@@ -253,7 +255,6 @@
 
             }
             ?>
-
             <!--pic viewer-->
             <div class="uploadPic" style="position:absolute; z-index: 9999;">
                 <div class="form-group col-3">
@@ -302,13 +303,13 @@
                         if($i == 1){
                             echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
                         }else{
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="alist.php?page='.$i.'">'.$i.'</a></li>';
                         }
                     }else{
                         if($i == $akteullePage){
                             echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
                         }else{
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="comment.php?page='.$i.'">'.$i.'</a></li>';
+                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="alist.php?page='.$i.'">'.$i.'</a></li>';
                         }
                     }
 
