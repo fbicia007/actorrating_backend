@@ -161,6 +161,10 @@
             </div>
             <div class="form-group">
                 <label class="col-sm-3 col-form-label" style="margin-top: 20px;">角色和演员</label>
+                <span id="example" class="d-inline-block" tabindex="0" data-toggle="tooltip" title="选择状态后激活此功能">
+                    <button class="btn btn-info" style="pointer-events: none;" type="button" disabled>添加角色</button>
+                </span>
+
                 <button type="button" class="btn btn-info col-sm-2" id="addRole" style="display: none;" onclick="$('#addNewActor').show();">添加角色</button>
                 <button type="button" class="btn btn-info col-sm-2" id="addRoleActors" style="display: none;">添加角色</button>
                 <a class="btn btn-success" id="addNewActor" data-toggle="modal" onclick="setConstellation();" data-target="#addActorEditor" style="display: none;">添加角色时没有找到演员？这里添加</a>
@@ -356,7 +360,9 @@
 <script  src="js/cropperPoster.js"></script>
 
 <script>
-
+    $(function () {
+        $('[data-toggle="tooltip"]').tooltip()
+    })
     //check image size and type
     var a=0;
     //photo
@@ -470,12 +476,14 @@
         //$( "#addNewActor" ).show();
         $( "#addRole" ).hide();
         $( "#addNewActor" ).hide();
+        $( "#example" ).remove();
         var x = 1;
 
     });
     $( "#online" ).focus(function() {
 
         $( "#addRoleActors" ).hide();
+        $( "#example" ).remove();
         //$( "#addNewActor" ).show();
         $( "#addRole" ).show();
         //$( "#addNewActor" ).hide();
