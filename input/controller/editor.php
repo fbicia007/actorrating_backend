@@ -11,8 +11,18 @@ include_once "../connect.php";
 if($_GET['actorId'])
 {
     $actorId = $_GET['actorId'];
+    $page = $_GET['page'];
     $actorName = $_POST["actorName"];
-    $birthday = $_POST["birthday"];
+
+    if(!$_POST["birthday"]){
+        $birthday = NULL;
+    }
+    else
+    {
+       $birthday = $_POST["birthday"];
+    }
+
+
     $constellation = $_POST["constellation"];
     $birthplace = $_POST["birthplace"];
     $profession = $_POST["profession"];
@@ -23,13 +33,14 @@ if($_GET['actorId'])
     $stmt = $pdo->prepare($actorsSql);
     $stmt->execute(array($actorName,$photoName,$actorDescription,$birthday,$constellation,$birthplace,$profession,$actorId));
 
-    header("Location:../alist.php");
+    header("Location:../alist.php?page=".$page);
     exit();
 
 }
 elseif ($_GET['movieId'])
 {
     $movieId = $_GET['movieId'];
+    $page = $_GET['page'];
     $movieTitle = $_POST["movieTitle"];
     $movieDescription = $_POST["movieDescription"];
     $posterVName = $_POST['posterVName'];
@@ -178,6 +189,6 @@ elseif ($_GET['movieId'])
         $n++;
     }
 
-    header("Location:../index.php");
+    header("Location:../index.php?page=".$page);
     exit();
 }

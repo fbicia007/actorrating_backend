@@ -153,17 +153,17 @@
                     <!-- Modal editor -->
                     <div class="modal fade" id="actorEditor'.$id.'" tabindex="-1" role="dialog" aria-labelledby="actorLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
-                        <div class="modal-content">
+                        <div class="modal-content" style="width: 140%;">
                           <div class="modal-header">
-                            <h5 class="modal-title" id="actorLabel">编辑演员: '.$name.' 的详细资料</h5>
+                            <h5 class="modal-title" id="actorLabel">编辑演员 '.$name.' 的详细资料</h5>
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                               <span aria-hidden="true">&times;</span>
                             </button>
                           </div>
                           <div class="modal-body">
-                            <form class="col-12" enctype="multipart/form-data" action="controller/editor.php?actorId='.$id.'" method="POST" id="actorEditorForm'.$id.'">
+                            <form class="col-12" style="text-align: left;" enctype="multipart/form-data" action="controller/editor.php?page='.$_GET['page'].'&actorId='.$id.'" method="POST" id="actorEditorForm'.$id.'">
                                 <div class="form-group row col-sm-12">
-                                    <label class="col-sm-3 col-form-label">演员姓名</label>
+                                    <label class="col-sm-3 col-form-label">姓名</label>
                                     <div class="col-sm-9">
                                         <input type="text" class="form-control" id="actorName'.$id.'" name="actorName" value="'.$name.'" required>
                                     </div>
@@ -187,20 +187,20 @@
                                     </div>
                                 </div>
                                 <div class="form-group row col-sm-12">
-                                    <label class="col-sm-3 col-form-label" for="profession">精通专业</label>
+                                    <label class="col-sm-3 col-form-label" for="profession">职业</label>
                                     <div class="col-sm-9">
-                                        <input type="text" class="form-control" id="profession'.$id.'" name="profession" placeholder="比如演员,导演等，用逗号隔开" value="'.$profession.'">
+                                        <input type="text" class="form-control" id="profession'.$id.'" name="profession" placeholder="演员，导演，编剧" value="'.$profession.'">
                                     </div>
                                 </div>
                                 <div class="form-group row col-sm-12">
-                                    <label class="col-sm-3 col-form-label" for="actorDescription">简介：</label>
+                                    <label class="col-sm-3 col-form-label" for="actorDescription">简介</label>
                                     <div class="col-sm-9">
                                         <textarea class="form-control" id="actorDescription'.$id.'" name="actorDescription" rows="5">'.$description.'</textarea>
                                     </div>
                 
                                 </div>
                                 <div class="form-group row col-sm-12">
-                                    <label class="col-sm-3 col-form-label" for="photo">现有照片</label>
+                                    <label class="col-sm-3 col-form-label" for="photo">照片</label>
                                     <div class="col-sm-3 img-result'.$id.'">
                                         <img class="cropped'.$id.'" src="'.$host.'/actorrating/images/actors/'.$photo.'" style="width: 100px;" />
                                     </div>
@@ -208,8 +208,9 @@
                                         <div class="custom-file">
                                             <input type="file" class="custom-file-input" id="photo'.$id.'" name="photo">
                                             <input type="text" style="display: none;" id="photoName'.$id.'" name="photoName" value="'.$photo.'">
-                                            <label class="custom-file-label" for="photo">更改照片</label>
+                                            <label class="custom-file-label" style="text-align: left;" for="photo">更改照片</label>
                                         </div>
+                                        <footer style="display: block;font-size: 80%;color: #6c757d; margin-top: 5px;">请选择jpg，png，gif格式，小于10M的图片</footer>
                                     </div>
                                 </div>
                 
@@ -236,7 +237,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员：'.$name. ' 吗？
+                            您确定要从列表中删除演员 '.$name. ' 吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

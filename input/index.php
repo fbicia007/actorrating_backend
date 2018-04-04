@@ -10,9 +10,6 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/theme.bootstrap_4.css" rel="stylesheet">
-    <link href="css/theme.dropbox.css" rel="stylesheet">
-    <link href="css/theme.green.css" rel="stylesheet">
-    <link href="css/theme.ice.css" rel="stylesheet">
 
     <title>录入影视剧详细信息</title>
 
@@ -72,8 +69,8 @@
         <table class="table table-striped tablesorter" id="myTable">
             <thead class="thead-light">
             <tr>
-                <th scope="col">影片名</th>
-                <th scope="col">影片类型</th>
+                <th scope="col">名称</th>
+                <th scope="col">类型</th>
                 <th scope="col">导演</th>
                 <th scope="col">状态</th>
                 <th scope="col" class="sorter-false filter-false">编辑/删除</th>
@@ -142,7 +139,7 @@
                 <td>'.$status.'</td>
                 <td>
                     
-                    <a class="btn btn-primary" href="movieEditor.php?status='.$status.'&movieId='.$id.'">
+                    <a class="btn btn-primary" href="movieEditor.php?page='.$_GET['page'].'&status='.$status.'&movieId='.$id.'">
                             编辑
                         </a>
                         <!-- Button trigger modal -->
@@ -162,7 +159,7 @@
                             </button>
                           </div>
                           <div class="modal-body">
-                            您确定要从列表中删除演员： '.$title. '  吗？
+                            您确定要从列表中删除影片 '.$title. '  吗？
                           </div>
                           <div class="modal-footer">
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>

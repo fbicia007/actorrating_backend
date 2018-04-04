@@ -74,7 +74,7 @@ if($_POST['movieId']){
     $stmt = $pdo->prepare($delRoles);
     $stmt->execute(array($roleId));
 
-    echo "已从该影片中删除此觉色！";
+    echo "已从该影片中删除此角色！";
 
 }elseif ($_GET['movieId']&&$_GET['status']){
     #change status delet likes Or rolevotes

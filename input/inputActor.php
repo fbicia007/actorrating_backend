@@ -29,7 +29,7 @@
                     <a class="nav-link" href="index.php">影片列表 <span class="sr-only">(current)</span></a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="alist.php">演员列表</a>
+                    <a class="nav-link" href="alist.php">列表</a>
                 </li>
                 <li class="nav-item dropdown active">
                     <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
@@ -60,7 +60,7 @@
             <form class="col-6" enctype="multipart/form-data" action="controller/inputActors.php" method="POST">
 
                 <div class="form-group row col-sm-12">
-                    <label class="col-sm-3 col-form-label" for="actorName">演员姓名</label>
+                    <label class="col-sm-3 col-form-label" for="actorName">姓名</label>
                     <div class="col-sm-9">
                         <input type="text" class="form-control" id="actorName" name="actorName" required>
                     </div>
@@ -86,11 +86,11 @@
                 <div class="form-group row col-sm-12">
                     <label class="col-sm-3 col-form-label" for="profession">职业</label>
                     <div class="col-sm-9">
-                        <input type="text" class="form-control" id="profession" name="profession" placeholder="比如演员,导演等，用逗号隔开">
+                        <input type="text" class="form-control" id="profession" name="profession" placeholder="演员，导演，编剧">
                     </div>
                 </div>
                 <div class="form-group row col-sm-12">
-                    <label class="col-sm-3 col-form-label" for="actorDescription">简介：</label>
+                    <label class="col-sm-3 col-form-label" for="actorDescription">简介</label>
                     <div class="col-sm-9">
                         <textarea class="form-control" id="actorDescription" name="actorDescription" rows="5"></textarea>
                     </div>
@@ -103,7 +103,14 @@
                             <input type="file" class="custom-file-input" id="photo" name="photo" required>
                             <input type="hidden" style="display: ;" id="photoName" name="photoName" >
                             <label class="custom-file-label" for="photo">上传图片</label>
+                            <p id="error1" style="display:none; color:#FF0000;">
+                                上传图片格式错误!
+                            </p>
+                            <p id="error2" style="display:none; color:#FF0000;">
+                                上传图片过大，不能超过10M！
+                            </p>
                         </div>
+                        <footer style="display: block;font-size: 80%;color: #6c757d; margin-top: 5px;">请选择JPG，JPEG，PNG，GIF格式，小于10M的图片</footer>
                     </div>
                 </div>
 
@@ -130,6 +137,7 @@
     </div>
 
 
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
@@ -138,9 +146,33 @@
 
     <script src='https://cdnjs.cloudflare.com/ajax/libs/cropperjs/0.8.1/cropper.min.js'></script>
     <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
-    <script  src="js/cropperActor.js"></script>
+    <script src="js/cropperActor.js"></script>
 
     <script>
+
+        //check image size and type
+        var a=0;
+        //binds to onchange event of your input field
+        $('#photo').bind('change', function() {
+
+            var ext = $('#photo').val().split('.').pop().toLowerCase();
+            if ($.inArray(ext, ['gif','png','jpg','jpeg']) == -1){
+                $('#error1').slideDown("slow");
+                $('#error2').slideUp("slow");
+                a=0;
+            }else{
+                var picsize = (this.files[0].size);
+                if (picsize > 10000000){
+                    $('#error2').slideDown("slow");
+                    a=0;
+                }else{
+                    a=1;
+                    $('#error2').slideUp("slow");
+                }
+                $('#error1').slideUp("slow");
+
+            }
+        });
 
         //birthday to constellation
         function getConstellationByBirthday(strBirthday) {

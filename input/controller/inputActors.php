@@ -38,10 +38,12 @@
     }else{
         if($_POST['url']){
             header("Location:../".$_POST['url']);
-        }else{
+        }elseif ($_POST['ajaxInputActor']){
+            echo $actorId;
+        } else{
+            echo 1;
             header("Location:../alist.php");
         }
 
         exit();
     }
-

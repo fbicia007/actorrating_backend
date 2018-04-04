@@ -57,7 +57,7 @@
             <div class="card">
                 <div class="card-body">
                     <h5 class="card-title">评分管理</h5>
-                    <p class="card-text">在此可浏览演员得分和用户评论，可对评论进行删除操作。</p>
+                    <p class="card-text">在此可浏览演员评分和用户评论，可对评论进行删除操作。</p>
                 </div>
             </div>
         </div>
@@ -68,10 +68,10 @@
         <table class="table table-striped" id="myTable">
             <thead class="thead-light">
             <tr>
-                <th scope="col">姓名</th>
+                <th scope="col">演员</th>
                 <th scope="col" class="sorter-false filter-false">照片</th>
                 <th scope="col">评分</th>
-                <th scope="col" class="sorter-false filter-false">评论内容</th>
+                <th scope="col" class="sorter-false filter-false" style="width: 500px;">评论内容</th>
                 <th scope="col">评论人</th>
                 <th scope="col">时间</th>
                 <th scope="col" class="sorter-false filter-false">删除</th>
