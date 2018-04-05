@@ -248,17 +248,6 @@
                 // class names added to columns when sorted
                 columns: [ "primary", "secondary", "tertiary" ],
 
-                // reset filters button
-                filter_reset : ".reset",
-
-                // extra css class name (string or array) added to the filter element (input or select)
-                filter_cssFilter: [
-                    'form-control',
-                    'form-control',
-                    'form-control', // select needs custom class names :(
-                    'form-control custom-select',
-                    'form-control',
-                ]
 
             }
         })
@@ -276,7 +265,7 @@
 
                 // output string - default is '{page}/{totalPages}';
                 // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-                output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                output: '{startRow} - {endRow} / {totalRows}'
 
             });
 

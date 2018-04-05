@@ -376,7 +376,7 @@
 
                 // output string - default is '{page}/{totalPages}';
                 // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
-                output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+                output: '{startRow} - {endRow} / {totalRows}'
 
             });
 
