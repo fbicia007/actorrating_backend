@@ -29,7 +29,7 @@ elseif(isset($_GET["srch_text"]))
     $result = $stmt->fetchAll();
 }
 else{
-    $sql = 'SELECT * FROM actors';
+    $sql = 'SELECT * FROM actors ORDER BY CONVERT( name USING gbk ) COLLATE gbk_chinese_ci ASC';
     $stmt = $pdo->prepare($sql);
     $stmt->execute(array());
     $result = $stmt->fetchAll();

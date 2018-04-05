@@ -1,3 +1,10 @@
+<?php
+session_start();
+
+if(!$_SESSION['username']){
+    header('Location: ../index.php');
+}
+?>
 <!doctype html>
 <html lang="en">
 <head>
@@ -320,7 +327,7 @@
 
             <div class="form-group" style="margin-top: 50px;">
                 <button class="btn btn-primary" type="submit" id="saveMovie" name="submit">保存已修改信息</button>
-                <a class="btn btn-secondary" href="index.php"  name="submit">取消</a>
+                <a class="btn btn-secondary" href="index.php" name="submit">取消</a>
             </div>
 
 

@@ -46,6 +46,19 @@
             <input class="form-control mr-sm-2" type="text" name="search" placeholder="搜索影片" aria-label="Search">
             <button class="btn btn-outline-success my-2 my-sm-0" type="submit">搜索</button>
         </form>
+        <?php
+            session_start();
+
+            if($_SESSION['username']){
+                //echo 'Welcome'.$_SESSION['username'];
+                echo '<form class="form-inline my-2 my-lg-0" method="post" action="../index.php" id="logout"><button class="btn btn-secondary offset-sm-1" name="logout" type="submit" form="logout">退出登陆</button> </form>';
+
+            }
+            else{
+                header('Location: ../index.php');
+            }
+        ?>
+
     </div>
 </nav>
 
@@ -254,6 +267,8 @@
             //theme : "green",
         });
     });
+
+
 </script>
 
 </body>
