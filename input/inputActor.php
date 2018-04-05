@@ -121,15 +121,15 @@ if(!$_SESSION['username']){
                     </div>
                 </div>
 
-                <button class="btn btn-primary" type="submit" id="saveActor" name="submit">保存</button>
                 <a class="btn btn-secondary" href="alist.php" name="submit">取消</a>
+                <button class="btn btn-primary" type="submit" id="saveActor" name="submit">保存</button>
 
 
             </form>
             <div class="form-group col-3">
                 <div class="result"></div>
                 <!-- save btn -->
-                <button class="btn btn-success save hide">截取</button>
+                <button class="btn btn-success save hide">截取照片并保存</button>
             </div>
             <div class="form-group col-3 img-result hide">
                 <img class="cropped" src="" alt="">

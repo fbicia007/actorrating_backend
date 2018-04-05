@@ -93,7 +93,7 @@
         </label>
     </div>
     <button class="btn btn-lg btn-primary btn-block" name="btnLogin" type="submit">登陆</button>
-    <p class="mt-5 mb-3 text-muted">&copy; 2018</p>
+    <p class="mt-5 mb-3 text-muted">&copy; 2018 和风清穆</p>
 </form>
 
 </body>

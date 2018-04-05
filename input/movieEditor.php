@@ -25,7 +25,7 @@ if(!$_SESSION['username']){
 
     include_once 'connect.php';
 
-    $actorsSql = "SELECT * FROM `actors`";
+    $actorsSql = "SELECT * FROM actors ORDER BY CONVERT( name USING gbk ) COLLATE gbk_chinese_ci ASC";
     $stmt = $pdo->prepare($actorsSql);
     $stmt->execute();
     $resultActors = $stmt->fetchAll();
@@ -326,8 +326,9 @@ if(!$_SESSION['username']){
                 </div>
 
             <div class="form-group" style="margin-top: 50px;">
-                <button class="btn btn-primary" type="submit" id="saveMovie" name="submit">保存已修改信息</button>
+
                 <a class="btn btn-secondary" href="index.php" name="submit">取消</a>
+                <button class="btn btn-primary" type="submit" id="saveMovie" name="submit">保存</button>
             </div>
 
 
@@ -409,7 +410,7 @@ if(!$_SESSION['username']){
                         <div class="form-group col-3">
                             <div class="resultA"></div>
                             <!-- save btn -->
-                            <button class="btn btn-success saveA hide">截取</button>
+                            <button class="btn btn-success saveA hide">截取照片并保存</button>
                         </div>
                         <div class="form-group col-3 img-resultA hide">
                             <img class="croppedA" src="" alt="">
@@ -584,7 +585,7 @@ if(!$_SESSION['username']){
         $.post('controller/inputActors.php', {ajaxInputActor:'yes',actorName : $('#actorName').val(),birthday : $('#birthday').val(),constellation : $('#constellation').val(),birthplace : $('#birthplace').val(),profession : $('#profession').val(),actorDescription : $('#actorDescription').val(),photoName : $('#photoName').val()}, function(data) {
 
             if (data) {
-                alert('演员录入成功！');
+                alert('演员保存成功，可以从演员下拉菜单中选择。');
                 var newActorId = data;
                 var newActorName = $('#actorName').val();
                 $("select").append("<option value='"+newActorId+"'>"+newActorName+"</option>");
@@ -595,6 +596,10 @@ if(!$_SESSION['username']){
 
         $('#addActorEditor').modal('toggle');
         $('#addNewActor').hide();
+        $("#addActorEditor input").not(":button, :submit, :reset, :hidden").val("");
+        $(".croppedA").attr('src','');
+        $(".resultA").html('');
+        $(".saveA").attr('class','btn btn-success saveA hide');
         return false;
     }
 

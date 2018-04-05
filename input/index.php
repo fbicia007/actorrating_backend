@@ -10,6 +10,13 @@
     <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" rel="stylesheet">
     <link href="css/style.css" rel="stylesheet">
     <link href="css/theme.bootstrap_4.css" rel="stylesheet">
+    <!-- pager plugin -->
+    <link rel="stylesheet" href="css/jquery.tablesorter.pager.css">
+    <style>
+        .tablesorter-pager .btn-group-sm .btn {
+            font-size: 1.2em; /* make pager arrows more visible */
+        }
+    </style>
 
     <title>录入影视剧详细信息</title>
 
@@ -85,10 +92,38 @@
                 <th scope="col">名称</th>
                 <th scope="col">类型</th>
                 <th scope="col">导演</th>
-                <th scope="col">状态</th>
+                <!--<th scope="col">状态</th>-->
+                <th class="filter-select filter-exact" data-placeholder="选择状态">状态</th>
                 <th scope="col" class="sorter-false filter-false">编辑/删除</th>
             </tr>
             </thead>
+            <tfoot>
+            <tr>
+                <th colspan="5" class="ts-pager">
+                    <div class="Page navigation">
+                        <div class="btn-group btn-group-sm mx-1" role="group">
+                            <button type="button" class="btn btn-secondary first" style="padding-top: 8px;" title="回首页">⇤</button>
+                            <button type="button" class="btn btn-secondary prev" title="上一页">←</button>
+                        </div>
+                        <span class="pagedisplay"></span>
+                        <div class="btn-group btn-group-sm mx-1" role="group">
+                            <button type="button" class="btn btn-secondary next" title="下一页">→</button>
+                            <button type="button" class="btn btn-secondary last" style="padding-top: 8px;" title="最后一页">⇥</button>
+                        </div>
+                        <!--<div class="col-sm-5">
+                            <select class="form-control-sm custom-select px-1 pagesize" title="Select page size">
+                                <option selected="selected" value="10">10</option>
+                                <option value="20">20</option>
+                                <option value="30">30</option>
+                                <option value="all">All Rows</option>
+                            </select>
+                            <select class="form-control-sm custom-select px-4 mx-1 pagenum" title="Select page number"></select>
+                        </div>-->
+
+                    </div>
+                </th>
+            </tr>
+            </tfoot>
             <tbody>
             <?php
             include_once "connect.php";
@@ -103,30 +138,12 @@
 
             }else{
 
-                $moviesSql = "SELECT * FROM `movies`";
+                $moviesSql = "SELECT * FROM `movies` ORDER BY CONVERT( title USING gbk ) COLLATE gbk_chinese_ci ASC";
                 $stmt = $pdo->prepare($moviesSql);
                 $stmt->execute();
             }
 
             $resultMovies = $stmt->fetchAll();
-
-            #定义翻页
-            $per_page = 10;//define how many results for a page
-            $count = count($resultMovies);
-            $pages = ceil($count / $per_page);
-
-            if (empty($_GET['page'])) {
-                $page = "1";
-            } else {
-                $page = $_GET['page'];
-            }
-            $start = ($page - 1) * $per_page;
-            $pageSql = $moviesSql . " LIMIT $start,$per_page";
-            $stmt = $pdo->prepare($pageSql);
-            //$stmt->execute(array('%'.$_POST['search'].'%','%'.$_POST['search'].'%'));
-            $stmt->execute(array('%'.$_POST['search'].'%'));
-            $resultPageActors = $stmt->fetchAll();
-
 
 
             foreach ($resultMovies as $movie){
@@ -195,62 +212,12 @@
             </tbody>
         </table>
 
-        <nav aria-label="Page navigation example">
-            <ul class="pagination">
-                <li class="page-item">
-                    <?php
-                    $akteullePage = $_GET['page'];
-                    if($akteullePage && ($akteullePage!=1)){
-                        $targetPage = $akteullePage-1;
-                        echo '<a class="page-link" href="index.php?page='.$targetPage.'" aria-label="Previous">';
-                    }else{
-                        echo '<a class="page-link" href="#" aria-label="Previous">';
-                    }
-                    ?>
-                    <span aria-hidden="true">&laquo;</span>
-                    <span class="sr-only">Previous</span>
-                    </a>
-                </li>
-                <?php
-                //Show page links
-                //Show page links
-                for ($i = 1; $i <= $pages; $i++)
-                {
-                    if(!$akteullePage){
-                        if($i == 1){
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
-                        }else{
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="index.php?page='.$i.'">'.$i.'</a></li>';
-                        }
-                    }else{
-                        if($i == $akteullePage){
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" style="background-color: #dee2e6;" href="comment.php?page='.$i.'">'.$i.'</a></li>';
-                        }else{
-                            echo '<li class="page-item" id="'.$i.'"><a class="page-link" href="index.php?page='.$i.'">'.$i.'</a></li>';
-                        }
-                    }
 
-                }
-                ?>
-                <li class="page-item">
-                    <?php
-
-                    if($akteullePage!=$i-1){
-                        $targetPage = $akteullePage+1;
-                        echo '<a class="page-link" href="index.php?page='.$targetPage.'" aria-label="Next">';
-                    }else{
-                        echo '<a class="page-link" href="#" aria-label="Next">';
-                    }
-                    ?>
-                    <span aria-hidden="true">&raquo;</span>
-                    <span class="sr-only">Next</span>
-                    </a>
-                </li>
-            </ul>
-        </nav>
     </div>
 
 </div>
+
+
 
 
 <!-- Optional JavaScript -->
@@ -260,15 +227,61 @@
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js" integrity="sha384-JZR6Spejh4U02d8jOt6vLEHfe/JQGiRRSQQxSfFWpi1MquVdAyjUar5+76PVCmYl" crossorigin="anonymous"></script>
 <script src="js/jquery.tablesorter.js"></script>
 <script src="js/jquery.tablesorter.widgets.js"></script>
+<script src="js/jquery.tablesorter.pager.js"></script>
 <script>
     $(function() {
-        $("#myTable").tablesorter({
+
+        $("table").tablesorter({
             theme : "bootstrap",
-            //theme : "green",
-        });
+
+            //widthFixed: true,
+
+            // widget code contained in the jquery.tablesorter.widgets.js file
+            // use the zebra stripe widget if you plan on hiding any rows (filter widget)
+            // the uitheme widget is NOT REQUIRED!
+            widgets : [ "columns", "zebra" ],
+
+            widgetOptions : {
+                // using the default zebra striping class name, so it actually isn't included in the theme variable above
+                // this is ONLY needed for bootstrap theming if you are using the filter widget, because rows are hidden
+                zebra : ["even", "odd"],
+
+                // class names added to columns when sorted
+                columns: [ "primary", "secondary", "tertiary" ],
+
+                // reset filters button
+                filter_reset : ".reset",
+
+                // extra css class name (string or array) added to the filter element (input or select)
+                filter_cssFilter: [
+                    'form-control',
+                    'form-control',
+                    'form-control', // select needs custom class names :(
+                    'form-control custom-select',
+                    'form-control',
+                ]
+
+            }
+        })
+            .tablesorterPager({
+
+                // target the pager markup - see the HTML block below
+                container: $(".ts-pager"),
+
+                // target the pager page select dropdown - choose a page
+                cssGoto  : ".pagenum",
+
+                // remove rows from the table to speed up the sort of large tables.
+                // setting this to false, only hides the non-visible rows; needed if you plan to add/remove rows with the pager enabled.
+                removeRows: false,
+
+                // output string - default is '{page}/{totalPages}';
+                // possible variables: {page}, {totalPages}, {filteredPages}, {startRow}, {endRow}, {filteredRows} and {totalRows}
+                output: '{startRow} - {endRow} / {filteredRows} ({totalRows})'
+
+            });
+
     });
-
-
 </script>
 
 </body>
