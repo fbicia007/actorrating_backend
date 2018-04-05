@@ -481,8 +481,8 @@ if(!$_SESSION['username']){
         x = 1;
         n = 1;
     })
-    
-    $( "#offline" ).focus(function() {
+
+    $( "#offline" ).click(function() {
 
         $( "#addRoleActors" ).show();
         //$( "#addNewActor" ).show();
@@ -492,7 +492,7 @@ if(!$_SESSION['username']){
         var x = 1;
 
     });
-    $( "#online" ).focus(function() {
+    $( "#online" ).click(function() {
 
         $( "#addRoleActors" ).hide();
         $( "#example" ).remove();
