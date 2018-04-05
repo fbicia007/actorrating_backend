@@ -81,7 +81,7 @@
 <body class="text-center">
 <form class="form-signin" method="post">
     <img class="mb-4" src="images/logo.png" alt="" width="150" height="150">
-    <h1 class="h3 mb-3 font-weight-normal">请登录</h1>
+
     <label for="inputUsername" class="sr-only">Email address</label>
     <input type="text" id="inputUsername" name="username" class="form-control" placeholder="用户名" value="<?php if(isset($_COOKIE['username'])){echo $_COOKIE['username']; } ?>" required autofocus>
     <label for="inputPassword" class="sr-only">Password</label>

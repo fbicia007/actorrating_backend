@@ -195,7 +195,6 @@
                             <button type="button" class="btn btn-secondary" data-dismiss="modal">取消</button>
                             <form action="controller/del.php" method="POST">
                                 <input style="display: none;" name="movieId" value="' .$id.'">
-                                <input style="display: none;" name="pageDel" value="' .$_GET['page'].'">
                                 <button type="submit" class="btn btn-danger" name="submit">删除</button>
                             </form>
                           </div>

@@ -155,12 +155,14 @@ if ($result) {
     }
 
     #排序
+    /*
     function cmp($a, $b)
     {
         return bccomp($b->averageRating, $a->averageRating);
     }
 
     usort($out, "cmp");
+    */
     #end 排序
 
     if($out != null){

@@ -176,12 +176,12 @@
                 <td>
                     
                         <!-- Button trigger modal -->
-                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delActor'.$id.'">
+                    <button type="button" class="btn btn-danger" data-toggle="modal" data-target="#delActor'.$id.$openId.'">
                       删除
                     </button>
                     
                     <!-- Modal -->
-                    <div class="modal fade" id="delActor'.$id.'" tabindex="-1" role="dialog" aria-labelledby="actorLabel" aria-hidden="true">
+                    <div class="modal fade" id="delActor'.$id.$openId.'" tabindex="-1" role="dialog" aria-labelledby="actorLabel" aria-hidden="true">
                       <div class="modal-dialog" role="document">
                         <div class="modal-content">
                           <div class="modal-header">
@@ -198,7 +198,6 @@
                             <form action="controller/del.php" method="POST">
                                 <input style="display: none;" name="openId" value="' .$openId.'">
                                 <input style="display: none;" name="actorId" value="' .$actorId.'">
-                                <input style="display: none;" name="pageDel" value="' .$_GET['page'].'">
                                 <button type="submit" class="btn btn-danger">删除</button>
                             </form>
                           </div>

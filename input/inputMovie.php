@@ -481,8 +481,7 @@ if(!$_SESSION['username']){
         x = 1;
         n = 1;
     })
-
-
+    
     $( "#offline" ).focus(function() {
 
         $( "#addRoleActors" ).show();
