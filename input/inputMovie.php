@@ -267,7 +267,8 @@ if(!$_SESSION['username']){
                         <div class="form-group col-3">
                             <div class="resultA"></div>
                             <!-- save btn -->
-                            <button class="btn btn-success saveA hide">截取照片并保存</button>
+                            <button class="btn btn-success saveA hide" style="margin-top: 5px;">截取照片并保存</button>
+                            <div class="loading" style="display: none; width: 20px; margin-top: 5px;"><img src="../images/loading.gif"></div>
                         </div>
                         <div class="form-group col-3 img-resultA hide">
                             <img class="croppedA" src="" alt="">
@@ -300,7 +301,7 @@ if(!$_SESSION['username']){
                 <div class="form-group col-12">
                     <div class="result"></div>
                     <!-- save btn -->
-                    <button class="btn btn-success align-middle save hide">截取纵版海报并保存</button>
+                    <button class="btn btn-success align-middle save hide" style="margin-top: 5px;">截取纵版海报并保存</button>
                 </div>
 
                 <!-- input file -->
@@ -320,7 +321,8 @@ if(!$_SESSION['username']){
                 <div class="form-group col-12">
                     <div class="resultH"></div>
                     <!-- save btn -->
-                    <button class="btn btn-success align-middle saveH hide">截取横版海报并保存</button>
+                    <button class="btn btn-success align-middle saveH hide" style="margin-top: 5px;">截取横版海报并保存</button>
+                    <div class="loading" style="display: none; width: 20px; margin-top: 5px;"><img src="../images/loading.gif"></div>
                 </div>
                 <!-- input file -->
                 <div class="form-group">
@@ -338,7 +340,8 @@ if(!$_SESSION['username']){
                 <div class="form-group col-12">
                     <div class="resultA"></div>
                     <!-- save btn -->
-                    <button class="btn btn-success align-middle saveA hide">截取照片并保存</button>
+                    <button class="btn btn-success align-middle saveA hide" style="margin-top: 5px;">截取照片并保存</button>
+
                 </div>
                 <!-- input file -->
                 <div class="form-group">

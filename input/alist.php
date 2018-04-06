@@ -290,7 +290,8 @@
                 <div class="form-group col-3">
                     <div class="result"></div>
                     <!-- save btn -->
-                    <button class="btn btn-success save hide">截取</button>
+                    <button class="btn btn-success save hide" style="margin-top: 5px;">截取照片并保存</button>
+                    <div class="loading" style="display: none; width: 20px; margin-top: 5px;"><img src="../images/loading.gif"></div>
                 </div>
                 <!--<div class="form-group col-3 img-result hide">
                     <img class="cropped" src="" alt="">
@@ -430,7 +431,11 @@
     }
 
     function f1() {
-        document.querySelector('.uploadPic').setAttribute('style','display:none;');
+        //document.querySelector('.uploadPic').setAttribute('style','display:none;');
+
+        $(".result").html('');
+
+        $(".save").attr('class','btn btn-success save hide');
     }
 
 </script>

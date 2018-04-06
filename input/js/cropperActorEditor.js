@@ -60,6 +60,7 @@ function imgViewer(id) {
             width: 300 // input value
         }).toDataURL();
 
+        $(".loading").show();
         //上传图片
         var data={imgBase:imgSrc};
         $.post('../input/controller/imageUpload.php?source=actor',data,function(ret){
@@ -71,6 +72,7 @@ function imgViewer(id) {
                 alert('图片已保存！');
                 photoName.setAttribute('value', ret);
                 $('#saveActor'+id).prop('disabled', false);
+                $(".loading").hide();
             }
         },'text');
 

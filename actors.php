@@ -120,6 +120,7 @@ if ($result) {
                     'time'=>date("Y-m-d H:i",strtotime($dateTime))
                 ];
 
+
             }
 
         }#end vote detail
@@ -130,40 +131,97 @@ if ($result) {
         }else{
             $birthday = $key['birthday'];
         }
-        $out[] = (object)[
-            'id' => (int)$key['id'],
-            'name' => $key['name'],
-            'photo' => $host.'/actorrating/images/actors/'.$key['photo'],
-            'description' => $key['description'],
-            'birthday' => $birthday,
-            'constellation' => $key['constellation'],
-            'birthplace' => $key['birthplace'],
-            'profession' => $key['profession'],
-            'averageRating' => round($averageVote,1),
-            'ratingLow' => round(number_format($percentage14*100,0)),
-            'ratingMiddle' => round(number_format($percentage58*100,0)),
-            'ratingHigh' => round(number_format($percentage910*100,0)),
-            'rated'=>$ratingView,
-            'comments' => $comments
-        ];
 
+        if($ratingView==true){
+
+            //$outTrue[] = (object)[
+            //$outTrue[] = [
+            $out1[] = (object)[
+                'id' => (int)$key['id'],
+                'name' => $key['name'],
+                'photo' => $host.'/actorrating/images/actors/'.$key['photo'],
+                'description' => $key['description'],
+                'birthday' => $birthday,
+                'constellation' => $key['constellation'],
+                'birthplace' => $key['birthplace'],
+                'profession' => $key['profession'],
+                'averageRating' => round($averageVote,1),
+                'ratingLow' => round(number_format($percentage14*100,0)),
+                'ratingMiddle' => round(number_format($percentage58*100,0)),
+                'ratingHigh' => round(number_format($percentage910*100,0)),
+                'rated'=>$ratingView,
+                'comments' => $comments
+            ];
+
+
+
+        }else{
+            $out2[] = (object)[
+                'id' => (int)$key['id'],
+                'name' => $key['name'],
+                'photo' => $host.'/actorrating/images/actors/'.$key['photo'],
+                'description' => $key['description'],
+                'birthday' => $birthday,
+                'constellation' => $key['constellation'],
+                'birthplace' => $key['birthplace'],
+                'profession' => $key['profession'],
+                'averageRating' => round($averageVote,1),
+                'ratingLow' => round(number_format($percentage14*100,0)),
+                'ratingMiddle' => round(number_format($percentage58*100,0)),
+                'ratingHigh' => round(number_format($percentage910*100,0)),
+                'rated'=>$ratingView,
+                'comments' => $comments
+            ];
+
+
+        }
 
         $averageVote = 0;
         $percentage14=0;
         $percentage58=0;
         $percentage910=0;
+
+
     }
 
+
+
+ $sort = array(
+            'direction' => 'SORT_DESC', //排序顺序标志 SORT_DESC 降序；SORT_ASC 升序
+            'field'     => 'averageRating',       //排序字段
+        );
+        $arrSort = array();
+        $xx = array();
+        foreach($out1 AS $uniqid => $row){
+
+            foreach($row AS $key=>$value){
+
+                $arrSort[$key][$uniqid] = $value;
+
+            }
+        }
+
+        if($sort['direction']){
+            array_multisort($arrSort[$sort['field']], constant($sort['direction']), $out1);
+        }
+
+        $out=array_merge($out1,$out2);
+
+    //var_dump($out);
     #排序
-    /*
+/*
     function cmp($a, $b)
     {
         return bccomp($b->averageRating, $a->averageRating);
     }
 
     usort($out, "cmp");
-    */
+
     #end 排序
+*/
+
+
+
 
     if($out != null){
         #翻页

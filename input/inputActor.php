@@ -24,7 +24,9 @@ if(!$_SESSION['username']){
 
 </head>
 <body>
-    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+
+
+<nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="#">和风清穆-小程序后台管理系统</a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
@@ -129,7 +131,8 @@ if(!$_SESSION['username']){
             <div class="form-group col-3">
                 <div class="result"></div>
                 <!-- save btn -->
-                <button class="btn btn-success save hide">截取照片并保存</button>
+                <button class="btn btn-success save hide" style="margin-top:5px;">截取照片并保存</button>
+                <div id="loading" style="display: none; width: 20px; margin-top: 5px;"><img src="../images/loading.gif"></div>
             </div>
             <div class="form-group col-3 img-result hide">
                 <img class="cropped" src="" alt="">
@@ -155,7 +158,12 @@ if(!$_SESSION['username']){
     <script src='https://code.jquery.com/jquery-3.1.0.min.js'></script>
     <script src="js/cropperActor.js"></script>
 
-    <script>
+<script>
+
+
+</script>
+
+<script>
 
         //check image size and type
         var a=0;

@@ -48,6 +48,8 @@ upload.addEventListener('change', function (e) {
 
 // save on click
 save.addEventListener('click', function (e) {
+
+
     e.preventDefault();
     // get result to data uri
     var imgSrc = cropper.getCroppedCanvas({
@@ -55,9 +57,15 @@ save.addEventListener('click', function (e) {
         width: 300 // input value
     }).toDataURL();
 
+    $("#loading").show();
+
     //上传图片
     var data={imgBase:imgSrc};
+
     $.post('../input/controller/imageUpload.php?source=actor',data,function(ret){
+
+
+
         if(ret=='false'){
             alert('存储失败');
         }else if(ret=='11') {
@@ -66,8 +74,12 @@ save.addEventListener('click', function (e) {
             alert('图片已保存！');
             photoName.setAttribute('value', ret);
             $('#saveActor').prop('disabled', false);
+
+        $('#loading').hide();
+
         }
     },'text');
+
 
 
     // remove hide class of img

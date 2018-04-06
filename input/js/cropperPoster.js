@@ -165,6 +165,7 @@ save.addEventListener('click', function (e) {
         //width: img_w.value // input value
         width: 300 // input value
     }).toDataURL();
+    $(".loading").show();
 
     //上传图片
     var data={imgBase:imgSrc};
@@ -192,6 +193,7 @@ save.addEventListener('click', function (e) {
 
             }
             $('#saveMovie').prop('disabled', false);
+            $(".loading").hide();
 
         }
     },'text');
@@ -216,6 +218,7 @@ saveH.addEventListener('click', function (e) {
         //width: img_w.value // input value
         width: 300 // input value
     }).toDataURL();
+    $(".loading").show();
 
     //上传图片
     var data={imgBase:imgSrc};
@@ -243,6 +246,7 @@ saveH.addEventListener('click', function (e) {
 
             }
             $('#saveMovie').prop('disabled', false);
+            $(".loading").hide();
 
         }
     },'text');
@@ -267,6 +271,7 @@ saveA.addEventListener('click', function (e) {
         //width: img_w.value // input value
         width: 300 // input value
     }).toDataURL();
+    $(".loading").show();
 
     //上传图片
     var data = {imgBase: imgSrc};
@@ -284,6 +289,7 @@ saveA.addEventListener('click', function (e) {
             croppedA.src = imgSrc;
 
             $('#saveActor').prop('disabled', false);
+            $(".loading").hide();
 
         }
     }, 'text');
